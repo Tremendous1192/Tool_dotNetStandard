@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Tool_dotNetStandard.DataProcessing.Base
 {
+    /// <summary>
+    /// サポートベクトルマシンで使用するカーネルのインターフェース
+    /// </summary>
     public interface IKernel
     {
 

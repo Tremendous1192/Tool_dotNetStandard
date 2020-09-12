@@ -9,6 +9,9 @@ using System.IO;
 
 namespace Tool_dotNetStandard.DataProcessing.IO
 {
+    /// <summary>
+    /// CSVの入出力を扱うクラス。
+    /// </summary>
     public partial class CSVUser
     {
 

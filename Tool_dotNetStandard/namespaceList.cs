@@ -1,5 +1,7 @@
 ﻿using System;
 
+
+
 namespace Tremendous1192
 {
 
@@ -54,5 +56,7 @@ namespace Tremendous1192
     //Tremendous1192.Tool_dotNetStandard.DataProcessing.Statistics.GeneralizedLinearModel : 技術名(小枠) ; 一般化線形モデル。
     //LinerRegression class : 線形回帰用のクラス
 
-
 }
+
+
+

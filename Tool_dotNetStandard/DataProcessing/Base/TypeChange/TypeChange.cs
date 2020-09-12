@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Tool_dotNetStandard.DataProcessing.Base
 { 
+    /// <summary>
+    /// 型変換を行うクラス。
+    /// </summary>
     public partial class TypeChange
     {
         public static string Change_String(double input)
