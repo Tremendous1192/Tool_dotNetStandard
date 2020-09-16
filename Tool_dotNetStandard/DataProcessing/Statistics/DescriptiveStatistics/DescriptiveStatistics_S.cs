@@ -21,6 +21,16 @@ namespace Tool_dotNetStandard.DataProcessing.Statistics
                 throw new FormatException("Align length of " + nameof(data_A) + "(" + data_A.GetLength(0) + ")" + " with that of " + nameof(data_B) + "(" + data_B.GetLength(0) + ")");
             }
 
+            //等価な計算方法
+            double squareSum = 0;
+            for (int i = 0; i < data_A.Length; i++)
+            {
+                squareSum += (data_A[i] - data_B[i]) * (data_A[i] - data_B[i]);
+            }
+            return 1 - 6 * squareSum / (data_A.Length * data_A.Length * data_A.Length - data_A.Length);
+
+
+            //定義式の計算
             //計算用の平均値・和を算出する。
             double average_A = 0, average_B = 0;
             double squareSum_A = 0, squareSum_B = 0;
@@ -39,7 +49,7 @@ namespace Tool_dotNetStandard.DataProcessing.Statistics
             average_B /= data_B.Length;
 
             return (multiplicationSum - data_A.Length * average_A * average_B)
-                / Math.Sqrt((squareSum_A - data_A.Length * average_A * average_A) 
+                / Math.Sqrt((squareSum_A - data_A.Length * average_A * average_A)
                 * (squareSum_B - data_B.Length * average_B * average_B));
         }
 

@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
+//非同期処理
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Tool_dotNetStandard.DataProcessing.Base
 {
@@ -22,22 +26,19 @@ namespace Tool_dotNetStandard.DataProcessing.Base
             }
 
             double[,] result = new double[m1.GetLength(0), m2.GetLength(1)];
-            double h = 0.0;
+            // 定義通りだとfor文の順番は i , j , k だが高速化のため, i , k , j にしてある.
             for (int i = 0; i < result.GetLength(0); i++)
             {
-                for (int j = 0; j < result.GetLength(1); j++)
+                for (int k = 0; k < m1.GetLength(1); k++)
                 {
-                    h = 0.0;
-                    for (int k = 0; k < m1.GetLength(1); k++)
+                    for (int j = 0; j < result.GetLength(1); j++)
                     {
-                        h += m1[i, k] * m2[k, j];
+                        result[i, j] += m1[i, k] * m2[k, j];
                     }
-                    result[i, j] = h;
                 }
             }
             return result;
         }
-
 
     }
 
