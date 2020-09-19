@@ -7,7 +7,7 @@ using Tool_dotNetStandard.DataProcessing.Base;
 
 namespace Tool_dotNetStandard.DataProcessing.MachineLerning.NeuralNetWork
 {
-    public partial class BaseLayer
+    public abstract partial class BaseLayer
     {
 
 

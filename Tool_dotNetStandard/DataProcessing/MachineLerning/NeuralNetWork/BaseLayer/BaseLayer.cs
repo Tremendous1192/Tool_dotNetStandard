@@ -8,9 +8,9 @@ namespace Tool_dotNetStandard.DataProcessing.MachineLerning.NeuralNetWork
 {
     /// <summary>
     /// Neural Networkの基底クラス。
-    /// このクラスだけの場合、RegressionLayerと同じとする。
+    /// 抽象クラスのため、インスタンス生成はできない.
     /// </summary>
-    public partial class BaseLayer
+    public abstract partial class BaseLayer
     {
 
 

@@ -16,7 +16,7 @@ namespace Tool_dotNetStandard.DataProcessing.MachineLerning.NeuralNetWork
         }
 
 
-        public void Preset_Activation_Function(IVectorFunction Activation_Function)
+        public override void Preset_Activation_Function(IVectorFunction Activation_Function)
         {
         }
 

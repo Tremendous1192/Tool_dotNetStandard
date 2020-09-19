@@ -6,7 +6,7 @@ using Tool_dotNetStandard.DataProcessing.Base;
 
 namespace Tool_dotNetStandard.DataProcessing.MachineLerning.NeuralNetWork
 {
-    public partial class BaseLayer
+    public abstract partial class BaseLayer
     {
 
         public BaseLayer()
@@ -54,7 +54,7 @@ namespace Tool_dotNetStandard.DataProcessing.MachineLerning.NeuralNetWork
             drop_out = Math.Min(Math.Max(Drop_out, 0), 1);
         }
 
-        public void Preset_Activation_Function(IVectorFunction Activation_Function)
+        public virtual void Preset_Activation_Function(IVectorFunction Activation_Function)
         {
             activation_Function = Activation_Function;
         }
