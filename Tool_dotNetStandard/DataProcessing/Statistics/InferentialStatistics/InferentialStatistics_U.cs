@@ -15,35 +15,8 @@ namespace Tool_dotNetStandard.DataProcessing.Statistics
         public static double[,] Upper_Quartile_Sample(double[,] designMatrix)
         {
 
-            //並べ替え用の配列。
-            //design_matrixを計算に用いると参照渡しになるバグがある。
-            double[,] sorted = new double[designMatrix.GetLength(0), designMatrix.GetLength(1)];
-            for (int i = 0; i < designMatrix.GetLength(0); i++)
-            {
-                for (int j = 0; j < designMatrix.GetLength(1); j++)
-                {
-                    sorted[i, j] = designMatrix[i, j];
-                }
-            }
-
-            //昇順に並び替える
-            double buffer = 0.0;
-            for (int j = 0; j < sorted.GetLength(1); j++)
-            {
-                for (int i = 0; i < sorted.GetLength(0); i++)
-                {
-                    for (int i2 = i + 1; i2 < sorted.GetLength(0); i2++)
-                    {
-                        if (sorted[i, j] > sorted[i2, j])
-                        {
-                            buffer = sorted[i, j];
-                            sorted[i, j] = sorted[i2, j];
-                            sorted[i2, j] = buffer;
-                        }
-                    }
-                }
-            }
-
+            //配列を昇順に並べ替える。
+            double[,] sorted = InferentialStatistics.Sorted_in_Ascending_Order(designMatrix);
 
             double[,] upperQuartile = new double[1, sorted.GetLength(1)];
 

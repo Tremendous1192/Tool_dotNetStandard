@@ -10,19 +10,23 @@ namespace Tool_dotNetStandard.DataProcessing.Statistics
 
 
         /// <summary>
-        /// 標本平均を計算する。
+        /// 不偏平均を計算する。
         /// </summary>
         /// <param name="designMatrix"></param>
         /// <returns></returns>
         public static double[,] Mean(double[,] designMatrix)
         {
             double[,] mean = new double[1, designMatrix.GetLength(1)];
-            for (int j = 0; j < designMatrix.GetLength(1); j++)
+            for (int i = 0; i < designMatrix.GetLength(0); i++)
             {
-                for (int i = 0; i < designMatrix.GetLength(0); i++)
+                for (int j = 0; j < designMatrix.GetLength(1); j++)
                 {
                     mean[0, j] += designMatrix[i, j];
+
                 }
+            }
+            for (int j = 0; j < designMatrix.GetLength(1); j++)
+            {
                 mean[0, j] /= designMatrix.GetLength(0);
             }
 

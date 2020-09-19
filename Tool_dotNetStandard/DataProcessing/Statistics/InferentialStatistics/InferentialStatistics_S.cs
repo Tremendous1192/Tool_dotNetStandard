@@ -27,16 +27,16 @@ namespace Tool_dotNetStandard.DataProcessing.Statistics
 
             //昇順に並び替える
             double buffer = 0.0;
-            for (int j = 0; j < sorted.GetLength(1); j++)
+            for (int i1 = 0; i1 < designMatrix.GetLength(0)-1; i1++)
             {
-                for (int i = 0; i < sorted.GetLength(0); i++)
+                for (int i2 = i1 + 1; i2 < designMatrix.GetLength(0); i2++)
                 {
-                    for (int i2 = i + 1; i2 < sorted.GetLength(0); i2++)
+                    for (int j = 0; j < sorted.GetLength(1); j++)
                     {
-                        if (sorted[i, j] > sorted[i2, j])
+                        if (sorted[i1, j] > sorted[i2, j])
                         {
-                            buffer = sorted[i, j];
-                            sorted[i, j] = sorted[i2, j];
+                            buffer = sorted[i1, j];
+                            sorted[i1, j] = sorted[i2, j];
                             sorted[i2, j] = buffer;
                         }
                     }
@@ -48,36 +48,44 @@ namespace Tool_dotNetStandard.DataProcessing.Statistics
 
 
         /// <summary>
-        /// 標準偏差を計算する。
+        /// 不偏標準偏差を計算する。
         /// </summary>
         /// <param name="designMatrix"></param>
         /// <returns></returns>
         public static double[,] Nonbias_Standard_Deviation(double[,] designMatrix)
         {
-
-            double[] sum = new double[designMatrix.GetLength(1)];
-            double[,] standardDeviation
-                     = new double[1, designMatrix.GetLength(1)];
-
-            //標準偏差のk次元目を計算する。
+            //平均を計算する
+            double[] mean = new double[designMatrix.GetLength(1)];
+            for (int i = 0; i < designMatrix.GetLength(0); i++)
+            {
+                for (int j = 0; j < designMatrix.GetLength(1); j++)
+                {
+                    mean[j] += designMatrix[i, j];
+                }
+            }
             for (int j = 0; j < designMatrix.GetLength(1); j++)
             {
+                mean[j] += designMatrix.GetLength(0);
+            }
 
-                //j次元目とk次元目の積の総和を計算する。 Σxy
-                for (int i = 0; i < designMatrix.GetLength(0); i++)
+
+            double[,] standardDeviation = new double[1, designMatrix.GetLength(1)];
+            //平方和を計算する。 Σx^2
+            for (int i = 0; i < designMatrix.GetLength(0); i++)
+            {
+                for (int j = 0; j < designMatrix.GetLength(1); j++)
                 {
-                    sum[j] += designMatrix[i, j];
                     standardDeviation[0, j] += designMatrix[i, j] * designMatrix[i, j];
                 }
+            }
 
-                //偏差平方和の計算
-                standardDeviation[0, j] -= sum[j] * sum[j];
-
-                //不偏分散の計算
-                standardDeviation[0, j] /= designMatrix.GetLength(0) - 1;
-
-                //不偏標準偏差を計算する
-                standardDeviation[0, j] = Math.Sqrt(standardDeviation[0, j]);
+            //不偏標準偏差のj次元目の成分を計算する
+            for (int j = 0; j < designMatrix.GetLength(1); j++)
+            {
+                standardDeviation[0, j] = Math.Sqrt(
+                    (standardDeviation[0, j] - designMatrix.GetLength(0) * mean[j] * mean[j])
+                    / (designMatrix.GetLength(0) - 1)
+                    );
             }
 
             return standardDeviation;
