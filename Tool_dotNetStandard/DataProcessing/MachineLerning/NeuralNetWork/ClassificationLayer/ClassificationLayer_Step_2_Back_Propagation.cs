@@ -30,7 +30,7 @@ namespace Tool_dotNetStandard.DataProcessing.MachineLerning.NeuralNetWork
 
             //deltaの計算は、ratioとerrorの計算を省略した形で書ける
             //delta = Matrix.Hadamard_product(error, f_wx_plus_b);
-            delta = Matrix.Scalar_Multiplication(teach, -1);
+            delta = Matrix.ScalarMultiplication(teach, -1);
 
             change_w = Matrix.Multiplication(delta, Get_input_Transpose());
 

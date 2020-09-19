@@ -16,58 +16,47 @@ namespace Tool_dotNetStandard.DataProcessing.Base
         {
             double[,] average = DesignMatrix.Average(designMatrix);
 
-            double[,] corelationMatrix
-                     = new double[designMatrix.GetLength(1), designMatrix.GetLength(1)];
+            double[,] corelationMatrix = new double[designMatrix.GetLength(1), designMatrix.GetLength(1)];
 
             //分散・共分散行列の要素[j,k]を計算する。
-            for (int j = 0; j < designMatrix.GetLength(1); j++)
+            for (int i = 0; i < designMatrix.GetLength(0); i++)
             {
-                for (int k = j; k < designMatrix.GetLength(1); k++)
+                for (int j1 = 0; j1 < designMatrix.GetLength(1); j1++)
                 {
-
-                    //j次元目とk次元目の積の平均値を計算する。 E[XY]
-                    for (int n = 0; n < designMatrix.GetLength(0); n++)
+                    for (int j2 = 0; j1 < designMatrix.GetLength(1); j2++)
                     {
-                        corelationMatrix[j, k] += designMatrix[n, j] * designMatrix[n, k];
+                        //j次元目とk次元目の積の平均値を計算する。 E[XY]
+                        corelationMatrix[j1, j2] += designMatrix[i, j1] * designMatrix[i, j2];
                     }
-                    corelationMatrix[j, k] /= designMatrix.GetLength(0);
+                }
+            }
+            for (int j1 = 0; j1 < designMatrix.GetLength(1); j1++)
+            {
+                for (int j2 = j1; j1 < designMatrix.GetLength(1); j2++)
+                {
+                    //j次元目とk次元目の積の平均値を計算する。 E[XY]
+                    corelationMatrix[j1, j2] /= designMatrix.GetLength(0);
+
 
                     //j次元目の平均値とk次元目の平均値の積を引く。-E[X]E[Y]
-                    corelationMatrix[j, k] -= average[0, j] * average[0, k];
+                    corelationMatrix[j1, j2] -= average[0, j1] * average[0, j2];
 
                     //j , kを入れ替えても値は同じ
-                    corelationMatrix[k, j] = corelationMatrix[j, k];
+                    corelationMatrix[j2, j1] = corelationMatrix[j1, j2];
                 }
             }
 
-
-            //対角成分は正の数
-            bool minus = false;
-            for (int j = 0; j < corelationMatrix.GetLength(0); j++)
-            {
-                if (corelationMatrix[j, j] < 0) { minus = true; break; }
-            }
-            if (minus)
-            {
-                for (int j = 0; j < corelationMatrix.GetLength(0); j++)
-                {
-                    for (int k = 0; k < corelationMatrix.GetLength(1); k++)
-                    {
-                        corelationMatrix[j, k] *= -1;
-                    }
-                }
-            }
 
             double[] std = new double[corelationMatrix.GetLength(0)];
             for (int j = 0; j < corelationMatrix.GetLength(0); j++)
             {
                 std[j] = Math.Sqrt(corelationMatrix[j, j]);
             }
-            for (int j = 0; j < corelationMatrix.GetLength(0); j++)
+            for (int j1 = 0; j1 < corelationMatrix.GetLength(0); j1++)
             {
-                for (int k = 0; k < corelationMatrix.GetLength(1); k++)
+                for (int j2 = 0; j2 < corelationMatrix.GetLength(1); j2++)
                 {
-                    corelationMatrix[j, k] /= std[j] * std[k];
+                    corelationMatrix[j1, j2] /= std[j1] * std[j2];
                 }
             }
 

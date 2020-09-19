@@ -30,7 +30,7 @@ namespace Tool_dotNetStandard.DataProcessing.Base
             {
                 for (int j = 0; j < matrix.GetLength(1); j++)
                 {
-                    if (matrix[i, j] == 0)
+                    if (matrix[i, j].CompareTo(0) == 0)
                     {
                         continue;
                     }

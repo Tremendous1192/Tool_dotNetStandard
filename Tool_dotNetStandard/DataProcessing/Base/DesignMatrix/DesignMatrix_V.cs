@@ -18,29 +18,36 @@ namespace Tool_dotNetStandard.DataProcessing.Base
 
             double[,] average = DesignMatrix.Average(designMatrix);
 
-            double[,] variance_Covariance_Matrix
-                     = new double[designMatrix.GetLength(1), designMatrix.GetLength(1)];
+            double[,] variance_Covariance_Matrix = new double[designMatrix.GetLength(1), designMatrix.GetLength(1)];
 
             //分散・共分散行列の要素[j,k]を計算する。
-            for (int j = 0; j < designMatrix.GetLength(1); j++)
+            for (int i = 0; i < designMatrix.GetLength(0); i++)
             {
-                for (int k = j; k < designMatrix.GetLength(1); k++)
+                for (int j1 = 0; j1 < designMatrix.GetLength(1); j1++)
                 {
-
-                    //j次元目とk次元目の積の平均値を計算する。 E[XY]
-                    for (int n = 0; n < designMatrix.GetLength(0); n++)
+                    for (int j2 = 0; j1 < designMatrix.GetLength(1); j2++)
                     {
-                        variance_Covariance_Matrix[j, k] += designMatrix[n, j] * designMatrix[n, k];
+                        //j次元目とk次元目の積の平均値を計算する。 E[XY]
+                        variance_Covariance_Matrix[j1, j2] += designMatrix[i, j1] * designMatrix[i, j2];
                     }
-                    variance_Covariance_Matrix[j, k] /= designMatrix.GetLength(0);
-
-                    //j次元目の平均値とk次元目の平均値の積を引く。-E[X]E[Y]
-                    variance_Covariance_Matrix[j, k] -= average[0, j] * average[0, k];
-
-                    //j , kを入れ替えても値は同じ
-                    variance_Covariance_Matrix[k, j] = variance_Covariance_Matrix[j, k];
                 }
             }
+            for (int j1 = 0; j1 < designMatrix.GetLength(1); j1++)
+            {
+                for (int j2 = j1; j1 < designMatrix.GetLength(1); j2++)
+                {
+                    //j次元目とk次元目の積の平均値を計算する。 E[XY]
+                    variance_Covariance_Matrix[j1, j2] /= designMatrix.GetLength(0);
+
+
+                    //j次元目の平均値とk次元目の平均値の積を引く。-E[X]E[Y]
+                    variance_Covariance_Matrix[j1, j2] -= average[0, j1] * average[0, j2];
+
+                    //j , kを入れ替えても値は同じ
+                    variance_Covariance_Matrix[j2, j1] = variance_Covariance_Matrix[j1, j2];
+                }
+            }
+
             return variance_Covariance_Matrix;
         }
 

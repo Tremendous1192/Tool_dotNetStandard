@@ -48,7 +48,7 @@ namespace Tool_dotNetStandard.DataProcessing.Base
                 }
 
                 // i2 行目の成分に関して、i列目の値が 0になるように、各列の値を減算する
-                for (int i2 = 0; i2 < matrix.GetLength(0); i2++)
+                for (int i2 = i+1; i2 < matrix.GetLength(0); i2++)
                 {
                     if (i == i2) { }
                     else

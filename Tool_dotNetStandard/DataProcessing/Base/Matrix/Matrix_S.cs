@@ -15,7 +15,7 @@ namespace Tool_dotNetStandard.DataProcessing.Base
         /// <param name="matrix"></param>
         /// <param name="multiple"></param>
         /// <returns></returns>
-        public static double[,] Scalar_Multiplication(double[,] matrix, double multiple)
+        public static double[,] ScalarMultiplication(double[,] matrix, double multiple)
         {
             double[,] result = new double[matrix.GetLength(0), matrix.GetLength(1)];
             for (int j = 0; j < matrix.GetLength(0); j++)

@@ -17,20 +17,19 @@ namespace Tool_dotNetStandard.DataProcessing.Base
             double[,] average = DesignMatrix.Average(designMatrix);
             double[,] average_square = new double[1, designMatrix.GetLength(1)];
 
-            for (int k = 0; k < designMatrix.GetLength(1); k++)
+            for (int i = 0; i < designMatrix.GetLength(0); i++)
             {
-                for (int j = 0; j < designMatrix.GetLength(0); j++)
+                for (int j = 0; j < designMatrix.GetLength(1); j++)
                 {
-                    average_square[0, k] += designMatrix[j, k] * designMatrix[j, k];
+                    average_square[0, j] += designMatrix[i, j] * designMatrix[i, j];
                 }
-                average_square[0, k] /= designMatrix.GetLength(0);
             }
 
             double[,] result = new double[1, designMatrix.GetLength(1)];
 
-            for (int k = 0; k < designMatrix.GetLength(1); k++)
+            for (int j = 0; j < designMatrix.GetLength(1); j++)
             {
-                result[0, k] = Math.Sqrt(average_square[0, k] - average[0, k] * average[0, k]);
+                result[0, j] = Math.Sqrt(average_square[0, j] / designMatrix.GetLength(0) - average[0, j] * average[0, j]);
             }
             return result;
         }
