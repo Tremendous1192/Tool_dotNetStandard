@@ -28,7 +28,7 @@ namespace Tool_dotNetStandard.DataProcessing.Base
                 }
                 norm = Math.Sqrt(norm / design_matrix.GetLength(1));
 
-                if (norm > norm_max) { norm_max = norm; }
+                norm_max = norm_max < norm ? norm : norm_max;
             }
             return norm_max;
         }
@@ -54,7 +54,7 @@ namespace Tool_dotNetStandard.DataProcessing.Base
                 }
                 norm = Math.Sqrt(norm / design_matrix.GetLength(1));
 
-                if (norm > norm_max)
+                if (norm_max < norm )
                 {
                     norm_max = norm;
                     index = i;
@@ -73,7 +73,7 @@ namespace Tool_dotNetStandard.DataProcessing.Base
         public static double Minimum_Norm_L2(double[,] design_matrix)
         {
             double norm = 0;
-            double norm_min = 1.0 * 1000 * 1000;
+            double norm_min = double.MaxValue;
 
             for (int i = 0; i < design_matrix.GetLength(0); i++)
             {
@@ -84,7 +84,7 @@ namespace Tool_dotNetStandard.DataProcessing.Base
                 }
                 norm = Math.Sqrt(norm / design_matrix.GetLength(1));
 
-                if (norm < norm_min) { norm_min = norm; }
+                norm_min = norm_min > norm ? norm : norm_min;
             }
             return norm_min;
         }
@@ -99,7 +99,7 @@ namespace Tool_dotNetStandard.DataProcessing.Base
         public static int Minimum_Norm_L2_Index(double[,] design_matrix)
         {
             double norm = 0;
-            double norm_min = 1.0 * 1000 * 1000;
+            double norm_min = double.MaxValue;
             int index = 0;
 
             for (int i = 0; i < design_matrix.GetLength(0); i++)
@@ -111,7 +111,7 @@ namespace Tool_dotNetStandard.DataProcessing.Base
                 }
                 norm = Math.Sqrt(norm / design_matrix.GetLength(1));
 
-                if (norm < norm_min)
+                if (norm_min > norm )
                 {
                     norm_min = norm;
                     index = i;
