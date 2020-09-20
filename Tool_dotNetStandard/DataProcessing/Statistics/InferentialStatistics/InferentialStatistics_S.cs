@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 
+using Tool_dotNetStandard.DataProcessing.Base;
+
 namespace Tool_dotNetStandard.DataProcessing.Statistics
 {
     public partial class InferentialStatistics
@@ -14,20 +16,10 @@ namespace Tool_dotNetStandard.DataProcessing.Statistics
         /// <returns></returns>
         public static double[,] Sorted_in_Ascending_Order(double[,] designMatrix)
         {
-            //並べ替え用の配列。
-            //design_matrixを計算に用いると参照渡しになるバグがある。
-            double[,] sorted = new double[designMatrix.GetLength(0), designMatrix.GetLength(1)];
-            for (int i = 0; i < designMatrix.GetLength(0); i++)
-            {
-                for (int j = 0; j < designMatrix.GetLength(1); j++)
-                {
-                    sorted[i, j] = designMatrix[i, j];
-                }
-            }
+            //並べ替え用の配列。design_matrixを計算に用いると参照渡しになるバグがある。
+            double[,] sorted = Matrix.Clone(designMatrix);
 
-            //昇順に並び替える
-            double buffer = 0.0;
-            for (int i1 = 0; i1 < designMatrix.GetLength(0)-1; i1++)
+            for (int i1 = 0; i1 < designMatrix.GetLength(0) - 1; i1++)
             {
                 for (int i2 = i1 + 1; i2 < designMatrix.GetLength(0); i2++)
                 {
@@ -35,9 +27,7 @@ namespace Tool_dotNetStandard.DataProcessing.Statistics
                     {
                         if (sorted[i1, j] > sorted[i2, j])
                         {
-                            buffer = sorted[i1, j];
-                            sorted[i1, j] = sorted[i2, j];
-                            sorted[i2, j] = buffer;
+                            (sorted[i1, j], sorted[i2, j]) = (sorted[i2, j], sorted[i1, j]);
                         }
                     }
                 }
