@@ -12,7 +12,7 @@ namespace Tool_dotNetStandard.DataProcessing.MachineLerning.NeuralNetWork
 
         public ClassificationLayer()
         {
-            activation_Function = new SoftMaxIVector();
+            activationFunction = new SoftMaxIVector();
         }
 
 

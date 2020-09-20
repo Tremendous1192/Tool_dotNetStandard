@@ -12,10 +12,10 @@ namespace Tool_dotNetStandard.DataProcessing.MachineLerning.NeuralNetWork
         /// <summary>
         /// 損失関数の計算とパラメータ更新のためのdeltaを計算する。
         /// </summary>
-        /// <param name="Teach"></param>
-        public void Step_2_3rd_Back_Propagation(double[,] Teach)
+        /// <param name="correctData"></param>
+        public void Step_2_3rd_Back_Propagation(double[,] correctData)
         {
-            teach = Teach;
+            this.CorrectData = correctData;
 
             //誤差逆伝搬法のδの計算
             //逆数はratioの計算で一括化できる
@@ -30,15 +30,15 @@ namespace Tool_dotNetStandard.DataProcessing.MachineLerning.NeuralNetWork
 
             //deltaの計算は、ratioとerrorの計算を省略した形で書ける
             //delta = Matrix.Hadamard_product(error, f_wx_plus_b);
-            delta = Matrix.ScalarMultiplication(teach, -1);
+            this.Delta = Matrix.ScalarMultiplication(this.CorrectData, -1);
 
-            change_w = Matrix.Multiplication(delta, Get_input_Transpose());
+            this.DifferentialWithW = Matrix.Multiplication(this.Delta, this.InputTranspose);
 
 
             //損失関数の計算
-            double[,] ln_output = Matrix.Logarithm_LN(f_wx_plus_b);
-            double[,] product = Matrix.Hadamard_product(teach, ln_output);
-            target_function = -Matrix.Summation_X(product);
+            double[,] ln_output = Matrix.Logarithm_LN(this.fWXplusB);
+            double[,] product = Matrix.Hadamard_product(this.CorrectData, ln_output);
+            this.ObjectiveFunction = -Matrix.Summation_X(product);
         }
 
 

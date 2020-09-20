@@ -17,27 +17,27 @@ namespace Tool_dotNetStandard.DataProcessing.MachineLerning.NeuralNetWork
         public void Step_3_3rd_Update()
         {
             //wの更新
-            double[,] w_d_gamma = Matrix.ScalarMultiplication(change_w, gamma);
+            double[,] w_d_gamma = Matrix.ScalarMultiplication(this.DifferentialWithW, this.Gamma);
 
             double[,] w_change = w_d_gamma;
-            if (L_1 > 0)
+            if (l1 > 0)
             {
-                double[,] w_sign = Matrix.Sign_Element(change_w);
-                double[,] w_d_L_1 = Matrix.ScalarMultiplication(w_sign, L_1);
+                double[,] w_sign = Matrix.Sign_Element(differentialWithW);
+                double[,] w_d_L_1 = Matrix.ScalarMultiplication(w_sign, l1);
                 w_change = Matrix.Addition(w_change, w_d_L_1);
             }
-            if (L_2 > 0)
+            if (l2 > 0)
             {
-                double[,] w_d_L_2 = Matrix.ScalarMultiplication(w, L_2);
+                double[,] w_d_L_2 = Matrix.ScalarMultiplication(w, l2);
                 w_change = Matrix.Addition(w_change, w_d_L_2);
             }
-            if (drop_out > 0 && drop_out < 1)
+            if (dropoutRate > 0 && dropoutRate < 1)
             {
                 for (int j = 0; j < w_change.GetLength(0); j++)
                 {
                     for (int k = 0; k < w_change.GetLength(1); k++)
                     {
-                        if (ud.NextDouble() < drop_out)
+                        if (ud.NextDouble() < dropoutRate)
                         {
                             w_change[j, k] = 0;
                         }
@@ -45,35 +45,35 @@ namespace Tool_dotNetStandard.DataProcessing.MachineLerning.NeuralNetWork
                 }
             }
 
-            w = Matrix.Subtraction(w, w_change);
+            this.W = Matrix.Subtraction(this.W, w_change);
 
             //bの更新
-            double[,] b_d_gamma = Matrix.ScalarMultiplication(delta, gamma);
+            double[,] b_d_gamma = Matrix.ScalarMultiplication(this.Delta, this.Gamma);
 
             double[,] b_change = b_d_gamma;
-            if (L_1 > 0)
+            if (l1 > 0)
             {
                 double[,] b_sign = Matrix.Sign_Element(delta);
-                double[,] b_d_L_1 = Matrix.ScalarMultiplication(b_sign, L_1);
+                double[,] b_d_L_1 = Matrix.ScalarMultiplication(b_sign, l1);
                 b_change = Matrix.Addition(b_change, b_d_L_1);
             }
-            if (L_2 > 0)
+            if (l2 > 0)
             {
-                double[,] b_d_L_2 = Matrix.ScalarMultiplication(b, L_2);
+                double[,] b_d_L_2 = Matrix.ScalarMultiplication(b, l2);
                 b_change = Matrix.Addition(b_change, b_d_L_2);
             }
-            if (drop_out > 0 && drop_out < 1)
+            if (dropoutRate > 0 && dropoutRate < 1)
             {
                 for (int j = 0; j < b_change.GetLength(0); j++)
                 {
-                    if (ud.NextDouble() < drop_out)
+                    if (ud.NextDouble() < dropoutRate)
                     {
                         b_change[j, 0] = 0;
                     }
                 }
             }
 
-            b = Matrix.Subtraction(b, b_change);
+           this.B = Matrix.Subtraction(this.B, b_change);
 
         }
 

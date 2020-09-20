@@ -12,17 +12,17 @@ namespace Tool_dotNetStandard.DataProcessing.MachineLerning.NeuralNetWork
         /// 予測値を計算する。
         /// </summary>
         /// <param name="Input"></param>
-        public void Step_1_3rd_Forward_Propagation(double[,] Input)
+        public void Step_1_3rd_Forward_Propagation(double[,] input)
         {
-            input = Input;
+            this.Input = input;
 
-            wx = Matrix.Multiplication(w, input);
+            this.WX = Matrix.Multiplication(this.W, this.Input);
 
-            wx_plus_b = Matrix.Addition(wx, b);
+            this.WXplusB = Matrix.Addition(this.WX, this.B);
 
-            f_wx_plus_b = activation_Function.Calculate_f_u(wx_plus_b);
+            this.fWXplusB = activationFunction.Calculate_f_u(this.WXplusB);
 
-            f_dash_wx_plus_b = activation_Function.Calculate_f_u_dash(wx_plus_b);
+            this.fDashWXplusB = activationFunction.Calculate_f_u_dash(this.fWXplusB);
         }
 
 

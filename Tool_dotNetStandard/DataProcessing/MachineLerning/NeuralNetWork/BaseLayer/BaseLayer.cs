@@ -17,163 +17,230 @@ namespace Tool_dotNetStandard.DataProcessing.MachineLerning.NeuralNetWork
         /// <summary>
         /// 入力ベクトル
         /// </summary>
-        protected double[,] input;
+        private double[,] input;
         /// <summary>
         /// 入力ベクトル
         /// </summary>
         /// <returns></returns>
-        public double[,] Get_input() { return input; }
+        public double[,] Input
+        {
+            protected set { input = value; }
+            get { return input; }
+        }
         /// <summary>
         /// 入力ベクトルの転置行列
         /// </summary>
         /// <returns></returns>
-        public double[,] Get_input_Transpose()
+        public double[,] InputTranspose
         {
-            return Matrix.TransposeMatrix(input);
+            get { return Matrix.TransposeMatrix(input); }
         }
 
         /// <summary>
         /// 行列 W
         /// </summary>
-        protected double[,] w;
+        private double[,] w;
         /// <summary>
         /// 行列 W
         /// </summary>
         /// <returns></returns>
-        public double[,] Get_w() { return w; }
+        public double[,] W
+        {
+            protected set { w = value; }
+            get { return w; }
+        }
         /// <summary>
         /// 行列 Wの転置行列
         /// </summary>
         /// <returns></returns>
-        public double[,] Get_w_Transpose()
+        public double[,] WTranspose
         {
-            return Matrix.TransposeMatrix(w);
+            get { return Matrix.TransposeMatrix(w); }
         }
 
 
         /// <summary>
         /// バイアスベクトル
         /// </summary>
-        protected double[,] b;
+        private double[,] b;
         /// <summary>
         /// バイアスベクトル
         /// </summary>
         /// <returns></returns>
-        public double[,] Get_b() { return b; }
+        public double[,] B
+        {
+            protected set { b = value; }
+            get { return b; }
+        }
 
         /// <summary>
         /// 途中計算
         /// </summary>
-        protected double[,] wx;
+        private double[,] wx;
         /// <summary>
         /// 途中計算
         /// </summary>
-        public double[,] Get_wx() { return wx; }
+        public double[,] WX
+        {
+            protected set { wx = value; }
+            get { return wx; }
+        }
 
         /// <summary>
         /// 途中計算
         /// </summary>
-        protected double[,] wx_plus_b;
+        private double[,] wx_plus_b;
         /// <summary>
         /// 途中計算
         /// </summary>
-        public double[,] Get_wx_plus_b() { return wx_plus_b; }
+        public double[,] WXplusB
+        {
+            protected set { wx_plus_b = value; }
+            get { return wx_plus_b; }
+        }
 
         /// <summary>
         /// 計算結果
         /// </summary>
-        protected double[,] f_wx_plus_b;
+        private double[,] f_wx_plus_b;
         /// <summary>
         /// 計算結果
         /// </summary>
-        public double[,] Get_f_wx_plus_b() { return f_wx_plus_b; }
+        public double[,] fWXplusB
+        {
+            protected set { f_wx_plus_b = value; }
+            get { return f_wx_plus_b; }
+        }
         /// <summary>
         /// 計算結果の転置行列
         /// </summary>
-        public double[,] Get_f_wx_plus_b_Transpose()
+        public double[,] fWXplusBTranspose
         {
-            return Matrix.TransposeMatrix(f_wx_plus_b);
+            get { return Matrix.TransposeMatrix(f_wx_plus_b); }
         }
 
 
         /// <summary>
         /// 計算結果の導関数
         /// </summary>
-        protected double[,] f_dash_wx_plus_b;
+        private double[,] f_dash_wx_plus_b;
         /// <summary>
         /// 計算結果の導関数
         /// </summary>
-        public double[,] Get_f_dash_wx_plus_b() { return f_dash_wx_plus_b; }
+        public double[,] fDashWXplusB
+        {
+            protected set { f_dash_wx_plus_b = value; }
+            get { return f_dash_wx_plus_b; }
+        }
 
         /// <summary>
         /// 誤差逆伝播法の δ。
         /// Bを更新するベクトルでもある。
         /// </summary>
-        protected double[,] delta;
+        private double[,] delta;
         /// <summary>
         /// 誤差逆伝播法の δ。
         /// Bを更新するベクトルでもある。
         /// </summary>
-        public double[,] Get_delta() { return delta; }
+        public double[,] Delta
+        {
+            protected set { delta = value; }
+            get { return delta; }
+        }
 
         /// <summary>
-        /// W を更新する行列
+        /// Wで微分した目的関数の導関数
         /// </summary>
-        protected double[,] change_w;
+        private double[,] differentialWithW;
         /// <summary>
-        /// W を更新する行列
+        /// Wで微分した目的関数の導関数
         /// </summary>
-        public double[,] Get_change_w() { return change_w; }
+        public double[,] DifferentialWithW
+        {
+            protected set { differentialWithW = value; }
+            get { return differentialWithW; }
+        }
 
         /// <summary>
-        /// 教師ベクトル
+        /// 正解データ
         /// </summary>
-        protected double[,] teach;
+        private double[,] correctData;
         /// <summary>
-        /// 教師ベクトル
+        /// 正解データ
         /// </summary>
-        public double[,] Get_teach() { return teach; }
+        public double[,] CorrectData
+        {
+            protected set { correctData = value; }
+            get { return correctData; }
+        }
 
         /// <summary>
         /// ハイパーパラメーター
         /// </summary>
-        protected double gamma, L_1, L_2, drop_out;
+        private double gamma, l1, l2, dropoutRate;
+        public double Gamma
+        {
+            protected set { gamma = value; }
+            get { return gamma; }
+        }
+        public double L1
+        {
+            protected set { l1 = value; }
+            get { return l1; }
+        }
+        public double L2
+        {
+            protected set { l2 = value; }
+            get { return l2; }
+        }
+        public double DropoutRate
+        {
+            protected set { dropoutRate = value; }
+            get { return dropoutRate; }
+        }
+
 
         /// <summary>
         /// 誤差
         /// </summary>
-        protected double[,] error;
+        private double[,] error;
         /// <summary>
         /// 誤差
         /// </summary>
-        public double[,] Get_error() { return error; }
+        public double[,] Error
+        {
+            protected set { this.error = value; }
+            get { return error; }
+        }
 
         /// <summary>
         /// 目的関数
         /// </summary>
-        protected double target_function;
+        private double objectiveFunction;
         /// <summary>
         /// 目的関数
         /// </summary>
-        public double Get_target_function() { return target_function; }
-
-        /// <summary>
-        /// 代数計算用のインスタンス
-        /// </summary>
-        //Matrix_Algebra MA;
+        public double ObjectiveFunction
+        {
+            protected set { this.objectiveFunction = value; }
+            get { return objectiveFunction; }
+        }
 
 
         /// <summary>
         /// 活性化関数
         /// </summary>
-        protected IVectorFunction activation_Function;
+        protected IVectorFunction activationFunction;
 
 
         /// <summary>
         /// ドロップアウトの確率計算用
         /// </summary>
         protected UniformDistribution ud;
-
+        public uint Seed
+        {
+            get { return ud.Get_Seed(); }
+        }
 
     }
 }
