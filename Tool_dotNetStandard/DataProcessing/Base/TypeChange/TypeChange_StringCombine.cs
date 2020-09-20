@@ -105,16 +105,11 @@ namespace Tool_dotNetStandard.DataProcessing.Base
         {
             string result = "";
 
-            double round_cut = 1000 * 1000;
-            double add_d = 0;
-
             for (int i = 0; i < input.GetLength(0) - 1; i++)
             {
-                add_d = Math.Round(input[i] * round_cut) / round_cut;
-                result += add_d.ToString() + ",";
+                result += input[i].ToString() + ",";
             }
-            add_d = Math.Round(input[input.GetLength(0) - 1] * round_cut) / round_cut;
-            result += add_d.ToString();
+            result += input[input.Length-1].ToString();
             return result;
         }
 
@@ -131,19 +126,14 @@ namespace Tool_dotNetStandard.DataProcessing.Base
             string[] result = new string[L0];
             string L = "";
 
-            double round_cut = 1000 * 1000;
-            double add_d = 0;
-
             for (int i = 0; i < L0; i++)
             {
                 L = "";
                 for (int j = 0; j < L1 - 1; j++)
                 {
-                    add_d = Math.Round(input[i, j] * round_cut) / round_cut;
-                    L += add_d.ToString() + ",";
+                    L += input[i, j].ToString() + ",";
                 }
-                add_d = Math.Round(input[i, L1 - 1] * round_cut) / round_cut;
-                L += add_d.ToString();
+                L += input[i, input.GetLength(1)-1].ToString();
 
                 result[i] = L;
             }

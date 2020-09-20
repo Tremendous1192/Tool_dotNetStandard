@@ -12,7 +12,7 @@ namespace Tool_dotNetStandard.DataProcessing.Base
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static int[,] String_to_Int(string[,] input)
+        public static int[,] StringToInt(string[,] input)
         {
             int[,] result = new int[input.GetLength(0), input.GetLength(1)];
 
@@ -20,14 +20,7 @@ namespace Tool_dotNetStandard.DataProcessing.Base
             {
                 for (int j = 0; j < input.GetLength(1); j++)
                 {
-                    try
-                    {
-                        result[i, j] = int.Parse(input[i, j]);
-                    }
-                    catch
-                    {
-                        result[i, j] = 0;
-                    }
+                    result[i, j] = StringToInt(input[i, j]);
                 }
 
             }
@@ -39,7 +32,7 @@ namespace Tool_dotNetStandard.DataProcessing.Base
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static double[,] String_to_Double(string[,] input)
+        public static double[,] StringToDouble(string[,] input)
         {
             double[,] result = new double[input.GetLength(0), input.GetLength(1)];
 
@@ -47,14 +40,7 @@ namespace Tool_dotNetStandard.DataProcessing.Base
             {
                 for (int j = 0; j < input.GetLength(1); j++)
                 {
-                    try
-                    {
-                        result[i, j] = double.Parse(input[i, j]);
-                    }
-                    catch
-                    {
-                        result[i, j] = 0;
-                    }
+                    result[i,j] = StringToDouble(input[i,j]);
                 }
 
             }
@@ -66,7 +52,7 @@ namespace Tool_dotNetStandard.DataProcessing.Base
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static byte[,] String_to_Byte(string[,] input)
+        public static byte[,] StringToByte(string[,] input)
         {
             byte[,] result = new byte[input.GetLength(0), input.GetLength(1)];
 
@@ -74,14 +60,7 @@ namespace Tool_dotNetStandard.DataProcessing.Base
             {
                 for (int j = 0; j < input.GetLength(1); j++)
                 {
-                    try
-                    {
-                        result[i, j] = byte.Parse(input[i, j]);
-                    }
-                    catch
-                    {
-                        result[i, j] = 0;
-                    }
+                    result[i, j] = StringToByte(input[i, j]);
                 }
 
             }
@@ -93,7 +72,7 @@ namespace Tool_dotNetStandard.DataProcessing.Base
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static string[,] Number_to_String(int[,] input)
+        public static string[,] NumberToString(int[,] input)
         {
             string[,] result = new string[input.GetLength(0), input.GetLength(1)];
 
@@ -113,7 +92,7 @@ namespace Tool_dotNetStandard.DataProcessing.Base
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static string[,] Number_to_String(double[,] input)
+        public static string[,] NumberToString(double[,] input)
         {
 
             string[,] result = new string[input.GetLength(0), input.GetLength(1)];
@@ -134,7 +113,7 @@ namespace Tool_dotNetStandard.DataProcessing.Base
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static string[,] Number_to_String(byte[,] input)
+        public static string[,] NumberToString(byte[,] input)
         {
             string[,] result = new string[input.GetLength(0), input.GetLength(1)];
 

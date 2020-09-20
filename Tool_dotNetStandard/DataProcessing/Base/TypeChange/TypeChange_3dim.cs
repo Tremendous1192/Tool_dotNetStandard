@@ -12,7 +12,7 @@ namespace Tool_dotNetStandard.DataProcessing.Base
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static int[,,] String_to_Int(string[,,] input)
+        public static int[,,] StringToInt(string[,,] input)
         {
             int[,,] result = new int[input.GetLength(0), input.GetLength(1), input.GetLength(2)];
 
@@ -22,14 +22,7 @@ namespace Tool_dotNetStandard.DataProcessing.Base
                 {
                     for (int k = 0; k < input.GetLength(2); k++)
                     {
-                        try
-                        {
-                            result[i, j, k] = int.Parse(input[i, j, k]);
-                        }
-                        catch
-                        {
-                            result[i, j, k] = 0;
-                        }
+                        result[i, j, k] = StringToInt(input[i, j, k]);
                     }
 
                 }
@@ -43,7 +36,7 @@ namespace Tool_dotNetStandard.DataProcessing.Base
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static double[,,] String_to_Double(string[,,] input)
+        public static double[,,] StringToDouble(string[,,] input)
         {
             double[,,] result = new double[input.GetLength(0), input.GetLength(1), input.GetLength(2)];
 
@@ -53,14 +46,7 @@ namespace Tool_dotNetStandard.DataProcessing.Base
                 {
                     for (int k = 0; k < input.GetLength(2); k++)
                     {
-                        try
-                        {
-                            result[i, j, k] = double.Parse(input[i, j, k]);
-                        }
-                        catch
-                        {
-                            result[i, j, k] = 0;
-                        }
+                        result[i, j, k] = StringToDouble(input[i, j, k]);
                     }
 
                 }
@@ -74,7 +60,7 @@ namespace Tool_dotNetStandard.DataProcessing.Base
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static byte[,,] String_to_Byte(string[,,] input)
+        public static byte[,,] StringToByte(string[,,] input)
         {
             byte[,,] result = new byte[input.GetLength(0), input.GetLength(1), input.GetLength(2)];
 
@@ -84,14 +70,7 @@ namespace Tool_dotNetStandard.DataProcessing.Base
                 {
                     for (int k = 0; k < input.GetLength(2); k++)
                     {
-                        try
-                        {
-                            result[i, j, k] = byte.Parse(input[i, j, k]);
-                        }
-                        catch
-                        {
-                            result[i, j, k] = 0;
-                        }
+                        result[i, j, k] = StringToByte(input[i, j, k]);
                     }
 
                 }
@@ -105,7 +84,7 @@ namespace Tool_dotNetStandard.DataProcessing.Base
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static string[,,] Number_to_String(int[,,] input)
+        public static string[,,] NumberToString(int[,,] input)
         {
             string[,,] result = new string[input.GetLength(0), input.GetLength(1), input.GetLength(2)];
 
@@ -128,7 +107,7 @@ namespace Tool_dotNetStandard.DataProcessing.Base
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static string[,,] Number_to_String(double[,,] input)
+        public static string[,,] NumberToString(double[,,] input)
         {
             string[,,] result = new string[input.GetLength(0), input.GetLength(1), input.GetLength(2)];
 
@@ -151,7 +130,7 @@ namespace Tool_dotNetStandard.DataProcessing.Base
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static string[,,] Number_to_String(byte[,,] input)
+        public static string[,,] NumberToString(byte[,,] input)
         {
             string[,,] result = new string[input.GetLength(0), input.GetLength(1), input.GetLength(2)];
 

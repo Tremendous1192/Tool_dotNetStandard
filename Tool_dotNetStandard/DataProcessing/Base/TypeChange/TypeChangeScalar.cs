@@ -11,16 +11,11 @@ namespace Tool_dotNetStandard.DataProcessing.Base
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static int String_to_Int(string input)
+        public static int StringToInt(string input)
         {
-            try
-            {
-                return int.Parse(input);
-            }
-            catch
-            {
-                return 0;
-            }
+            int parsed;
+            if (int.TryParse(input, out parsed)) { return parsed; }
+            return 0;
         }
 
         /// <summary>
@@ -28,16 +23,11 @@ namespace Tool_dotNetStandard.DataProcessing.Base
         /// </summary>random
         /// <param name="input"></param>
         /// <returns></returns>
-        public static double String_to_Double(string input)
+        public static double StringToDouble(string input)
         {
-            try
-            {
-                return double.Parse(input);
-            }
-            catch
-            {
-                return 0.0;
-            }
+            double parsed;
+            if (double.TryParse(input, out parsed)) { return parsed; }
+            return 0.0;
         }
 
         /// <summary>
@@ -45,16 +35,11 @@ namespace Tool_dotNetStandard.DataProcessing.Base
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static byte String_to_Byte(string input)
+        public static byte StringToByte(string input)
         {
-            try
-            {
-                return byte.Parse(input);
-            }
-            catch
-            {
-                return 0;
-            }
+            byte parsed;
+            if (byte.TryParse(input, out parsed)) { return parsed; }
+            return 0;
         }
 
         /// <summary>
@@ -62,7 +47,7 @@ namespace Tool_dotNetStandard.DataProcessing.Base
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static string Number_to_String(int input)
+        public static string NumberToString(int input)
         {
             return input.ToString();
         }
@@ -72,7 +57,7 @@ namespace Tool_dotNetStandard.DataProcessing.Base
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static string Number_to_String(double input)
+        public static string NumberToString(double input)
         {
             return input.ToString("G12");
         }
@@ -82,7 +67,7 @@ namespace Tool_dotNetStandard.DataProcessing.Base
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static string Number_to_String(byte input)
+        public static string NumberToString(byte input)
         {
             return input.ToString();
         }
