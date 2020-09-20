@@ -27,24 +27,9 @@ namespace Tool_dotNetStandard.DataProcessing.IO
             //NugetでSystem.Text.Encoding.CodePagesをダウンロードしておく.
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
-            //Stream stream = this.GetType().GetTypeInfo().Assembly.GetManifestResourceStream(textFileName);
-            Encoding sjisEnc = Encoding.GetEncoding("Shift_JIS");
-
-            System.IO.StreamWriter sw;
-            try
+            using (var writer = new StreamWriter(path, append: true))
             {
-                //sw = new System.IO.StreamWriter(stream, sjisEnc,512,false);
-                sw = File.AppendText(path);
-                sw.AutoFlush = true;
-
-
-                sw.WriteLine(writtenText);
-                //閉じる
-                sw.Dispose();
-            }
-            catch
-            {
-                Console.WriteLine("Exception !!");
+                writer.WriteLine(writtenText);
             }
 
         }
@@ -63,27 +48,9 @@ namespace Tool_dotNetStandard.DataProcessing.IO
             //NugetでSystem.Text.Encoding.CodePagesをダウンロードしておく.
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
-            //Stream stream = this.GetType().GetTypeInfo().Assembly.GetManifestResourceStream(textFileName);
-            Encoding sjisEnc = Encoding.GetEncoding("Shift_JIS");
-
-            System.IO.StreamWriter sw;
-            try
+            using (var writer = new StreamWriter(path, append: true))
             {
-                //sw = new System.IO.StreamWriter(stream, sjisEnc,512,false);
-                sw = File.AppendText(path);
-                sw.AutoFlush = true;
-
-
-                for (int i = 0; i < writtenText.GetLength(0); i++)
-                {
-                    sw.WriteLine(writtenText[i]);
-                }
-                //閉じる
-                sw.Dispose();
-            }
-            catch
-            {
-                Console.WriteLine("Exception !!");
+                foreach (string w in writtenText) { writer.WriteLine(w); }
             }
 
         }
@@ -99,37 +66,9 @@ namespace Tool_dotNetStandard.DataProcessing.IO
         /// <returns></returns>
         public static void Write_text_Add(string textFileName, string[,] writtenText)
         {
-            string path = System.IO.Path.Combine(Tool_dotNetStandard.DataProcessing.IO.Directory.GetCurrentDirectory(), textFileName + ".txt");
+            string[] combined = Tool_dotNetStandard.DataProcessing.Base.TypeChange.Combine_Array_to_string_by_comma(writtenText);
 
-            //NugetでSystem.Text.Encoding.CodePagesをダウンロードしておく.
-            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-
-            //Stream stream = this.GetType().GetTypeInfo().Assembly.GetManifestResourceStream(textFileName);
-            Encoding sjisEnc = Encoding.GetEncoding("Shift_JIS");
-
-            System.IO.StreamWriter sw;
-            try
-            {
-                //sw = new System.IO.StreamWriter(stream, sjisEnc,512,false);
-                sw = File.AppendText(path);
-                sw.AutoFlush = true;
-
-
-                for (int i = 0; i < writtenText.GetLength(0); i++)
-                {
-                    for (int j = 0; j < writtenText.GetLength(1) - 1; j++)
-                    {
-                        sw.Write(writtenText[i, j] + ",");
-                    }
-                    sw.WriteLine(writtenText[i, writtenText.GetLength(1) - 1]);
-                }
-                //閉じる
-                sw.Dispose();
-            }
-            catch
-            {
-                Console.WriteLine("Exception !!");
-            }
+            Write_text_Add(textFileName, combined);
 
         }
 

@@ -19,41 +19,39 @@ namespace Tool_dotNetStandard.DataProcessing.IO
         /// <returns></returns>
         public static string[] ReadText(string textFileName)
         {
-
             string path = System.IO.Path.Combine(Tool_dotNetStandard.DataProcessing.IO.Directory.GetCurrentDirectory(), textFileName + ".txt");
 
+            //.Net Coreでtxtを使用するのに必要。
             //NugetでSystem.Text.Encoding.CodePagesをダウンロードしておく.
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
-            //Stream stream = this.GetType().GetTypeInfo().Assembly.GetManifestResourceStream(textFileName);
-            Encoding sjisEnc = Encoding.GetEncoding("Shift_JIS");
-
             List<string> temp = new List<string>();
-
-            System.IO.StreamReader file;
-            try
+            if (File.Exists(path))
             {
-                //file = new System.IO.StreamReader(stream, sjisEnc);
-                file = File.OpenText(path);
-
-                string line = "";
-                // test.txtを1行ずつ読み込んでいき、末端(何もない行)までtempに格納する
-                while ((line = file.ReadLine()) != null)
+                using (var reader = new StreamReader(path, Encoding.GetEncoding("Shift_JIS")))
                 {
-                    temp.Add(line);
+                    while (!reader.EndOfStream)
+                    {
+                        temp.Add(reader.ReadLine());
+                    }
+                    reader.Dispose();
                 }
-                file.Dispose();
             }
-            catch
+            else
             {
-                Console.WriteLine("Exception !!");
-                var a = new string[1];
-                a[0] = "No data";
-                return a;
+                throw new FormatException("404 File Not Found : " + nameof(textFileName));
             }
 
-
-            if (temp[temp.Count - 1] == "")
+            int blank = 0;
+            for (int i = 0; i < temp.Count; i++)
+            {
+                if (temp[temp.Count - 1 - i] != "")
+                {
+                    break;
+                }
+                blank++;
+            }
+            for (int i = 0; i < blank; i++)
             {
                 temp.RemoveAt(temp.Count - 1);
             }
@@ -69,54 +67,19 @@ namespace Tool_dotNetStandard.DataProcessing.IO
         /// <returns></returns>
         public static string[,] Read_text_2dim_Split_by_camma(string textFileName)
         {
-            string path = System.IO.Path.Combine(Tool_dotNetStandard.DataProcessing.IO.Directory.GetCurrentDirectory(), textFileName + ".txt");
+            string[] read = ReadText(textFileName);
 
-            //NugetでSystem.Text.Encoding.CodePagesをダウンロードしておく.
-            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-
-            //Stream stream = this.GetType().GetTypeInfo().Assembly.GetManifestResourceStream(textFileName);
-            Encoding sjisEnc = Encoding.GetEncoding("Shift_JIS");
-
-            List<string> temp = new List<string>();
-
-            System.IO.StreamReader file;
-            try
-            {
-                //file = new System.IO.StreamReader(stream, sjisEnc);
-                file = File.OpenText(path);
-
-                string line = "";
-                // test.txtを1行ずつ読み込んでいき、末端(何もない行)までtempに格納する
-                while ((line = file.ReadLine()) != null)
-                {
-                    temp.Add(line);
-                }
-                file.Dispose();
-            }
-            catch
-            {
-                Console.WriteLine("Exception !!");
-                var a = new string[1, 1];
-                a[0, 0] = "No data";
-                return a;
-            }
-
-
-            if (temp[temp.Count - 1] == "")
-            {
-                temp.RemoveAt(temp.Count - 1);
-            }
 
             int maxColumn = 1;
-            for (int j = 0; j < temp.Count; j++)
+            for (int j = 0; j < read.Length; j++)
             {
-                maxColumn = Math.Max(maxColumn, temp[j].Split(',').Length);
+                maxColumn = Math.Max(maxColumn, read[j].Split(',').Length);
             }
 
-            string[,] result = new string[temp.Count, maxColumn];
-            for (int j = 0; j < temp.Count; j++)
+            string[,] result = new string[read.Length, maxColumn];
+            for (int j = 0; j < read.Length; j++)
             {
-                string[] row = temp[j].Split(',');
+                string[] row = read[j].Split(',');
                 for (int k = 0; k < row.Length; k++)
                 {
                     result[j, k] = row[k];

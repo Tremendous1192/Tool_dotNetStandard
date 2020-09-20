@@ -14,7 +14,7 @@ namespace Tool_dotNetStandard.DataProcessing.IO
         /// 現在のDirectoryにあるtxtデータのファイル名を全て取得する
         /// </summary>
         /// <returns></returns>
-        public string[] Get_File_Name_txt_type()
+        public static string[] Get_File_Name_txt_type()
         {
             string[] files = System.IO.Directory.GetFiles(System.IO.Directory.GetCurrentDirectory());
             if (files.Length < 1) { Console.WriteLine("No file is here ."); return new string[1]; }
