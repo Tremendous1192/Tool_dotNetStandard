@@ -38,16 +38,16 @@ namespace Tool_dotNetStandard.DataProcessing.MachineLerning.SupportVector
 
             //カーネルを計算する
             double[,] r_j = new double[1, 1];
-            for (int j = 0; j < design_Matrix_without_Constant.GetLength(0); j++)
+            for (uint j = 0; j < design_Matrix_without_Constant.GetLength(0); j++)
             {
-                r_j = Matrix.Pick_Up_Row_Vector(design_Matrix_without_Constant, j);
+                r_j = Matrix.Row(design_Matrix_without_Constant, j);
                 kernelMatrix[j, 0] = iKernel.Calculate(rowVector, r_j);
             }
 
             //予測値の計算
             //予測値の符号 = Σ( for j ) 教師ラベル[Y]j * 係数[A]j * カーネル K( x , [X]j )
-            double[,] hadamard = Matrix.Hadamard_product(labelY, CoefficientA);
-            hadamard = Matrix.Hadamard_product(hadamard, kernelMatrix);
+            double[,] hadamard = Matrix.HadamardMultiply(labelY, CoefficientA);
+            hadamard = Matrix.HadamardMultiply(hadamard, kernelMatrix);
 
 
             //Σ( for j )

@@ -1,55 +1,59 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Tool_dotNetStandard.DataProcessing.Base
 {
     public partial class Matrix
     {
-
-
         /// <summary>
-        /// 同じ要素を持つインスタンスの生成.
-        /// Creating instances with the same elements as input .
+        /// すべての要素にオフセット項を加える.
         /// </summary>
         /// <param name="matrix"></param>
         /// <returns></returns>
-        public static double[,] Clone(double[,] matrix)
+        private static double[,] OffsetAll(double[,] matrix)
         {
+            double offset = double.MaxValue;
+            foreach (double m in matrix)
+            {
+                offset = offset > m ? m : offset;
+            }
+            offset /= 1000 * 1000;
+
             double[,] result = new double[matrix.GetLength(0), matrix.GetLength(1)];
             for (int i = 0; i < matrix.GetLength(0); i++)
             {
                 for (int j = 0; j < matrix.GetLength(1); j++)
                 {
-                    result[i, j] = matrix[i, j];
+                    result[i, j] = matrix[i, j] + offset;
                 }
             }
             return result;
         }
 
         /// <summary>
-        /// 列ベクトルを取り出す.
-        /// Get column vector.
+        /// 正方行列の対角成分にオフセット項を加える.
         /// </summary>
         /// <param name="matrix"></param>
-        /// <param name="column_index"></param>
         /// <returns></returns>
-        public static double[,] Column(double[,] matrix, uint column_index)
+        private static double[,] OffsetDiagonal(double[,] matrix)
         {
-            if (column_index >= matrix.GetLength(1))
+            double offset = double.MaxValue;
+            foreach (double m in matrix)
             {
-                throw new FormatException("column " + column_index + " must be less than matrix colmun " + matrix.GetLength(1));
+                offset = offset > m ? m : offset;
             }
+            offset /= 1000 * 1000;
 
-            double[,] result = new double[matrix.GetLength(0), 1];
+            double[,] result = new double[matrix.GetLength(0), matrix.GetLength(1)];
             for (int i = 0; i < matrix.GetLength(0); i++)
             {
-                result[i, 0] = matrix[i, column_index];
+                result[i, i] = matrix[i, i] + offset;
             }
             return result;
         }
 
 
     }
-
 }

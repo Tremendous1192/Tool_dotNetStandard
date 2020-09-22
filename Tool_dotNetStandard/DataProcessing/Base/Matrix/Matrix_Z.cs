@@ -13,7 +13,7 @@ namespace Tool_dotNetStandard.DataProcessing.Base
         /// </summary>
         /// <param name="matrix"></param>
         /// <returns></returns>
-        public static double[,] Zero_Matrix(double[,] matrix)
+        public static double[,] ZeroMatrix(double[,] matrix)
         {
             return new double[matrix.GetLength(0), matrix.GetLength(1)];
         }
@@ -24,7 +24,7 @@ namespace Tool_dotNetStandard.DataProcessing.Base
         /// <param name="row"></param>
         /// <param name="column"></param>
         /// <returns></returns>
-        public static double[,] Zero_Matrix(uint row, uint column)
+        public static double[,] ZeroMatrix(uint row, uint column)
         {
             return new double[row, column];
         }

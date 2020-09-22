@@ -13,12 +13,12 @@ namespace Tool_dotNetStandard.DataProcessing.Base
 
         /// <summary>
         /// 行列の掛け算.
-        /// Matrix multiplication .
+        /// Matrix multiple .
         /// </summary>
         /// <param name="m1"></param>
         /// <param name="m2"></param>
         /// <returns></returns>
-        public static double[,] Multiplication(double[,] m1, double[,] m2)
+        public static double[,] Multiply(double[,] m1, double[,] m2)
         {
             if (m1.GetLength(1) != m2.GetLength(0))
             {
@@ -39,6 +39,30 @@ namespace Tool_dotNetStandard.DataProcessing.Base
             }
             return result;
         }
+
+
+
+        /// <summary>
+        /// 行列のスカラー倍 .
+        /// Scalar multiple of matrix .
+        /// </summary>
+        /// <param name="matrix"></param>
+        /// <param name="multiple"></param>
+        /// <returns></returns>
+        public static double[,] Multiply(double[,] matrix, double multiple)
+        {
+            double[,] result = new double[matrix.GetLength(0), matrix.GetLength(1)];
+            for (int i = 0; i < matrix.GetLength(0); i++)
+            {
+                for (int j = 0; j < matrix.GetLength(1); j++)
+                {
+                    result[i, j] = matrix[i, j] * multiple;
+                }
+            }
+
+            return result;
+        }
+
 
     }
 

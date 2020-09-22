@@ -15,11 +15,11 @@ namespace Tool_dotNetStandard.DataProcessing.MachineLerning.NeuralNetWork
         /// <param name="delta_next"></param>
         public void Step_2_3rd_Back_Propagation(double[,] w_next, double[,] delta_next)
         {
-            double[,] w_T = Matrix.TransposeMatrix(w_next);
-            double[,] w_T_x_delta = Matrix.Multiplication(w_T, delta_next);
+            double[,] w_T = Matrix.Transpose(w_next);
+            double[,] w_T_x_delta = Matrix.Multiply(w_T, delta_next);
 
-            this.Delta = Matrix.Hadamard_product(w_T_x_delta, this.fDashWXplusB);
-            this.DifferentialWithW = Matrix.Multiplication(this.Delta, this.InputTranspose);
+            this.Delta = Matrix.HadamardMultiply(w_T_x_delta, this.fDashWXplusB);
+            this.DifferentialWithW = Matrix.Multiply(this.Delta, this.InputTranspose);
         }
     }
 }

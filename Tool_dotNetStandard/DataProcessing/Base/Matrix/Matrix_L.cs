@@ -8,24 +8,37 @@ namespace Tool_dotNetStandard.DataProcessing.Base
     {
 
         /// <summary>
-        /// 行列の各要素の自然対数をとる。
+        /// 絶対値の和。Manhattan norm
         /// </summary>
         /// <param name="matrix"></param>
         /// <returns></returns>
-        public static double[,] Logarithm_LN(double[,] matrix)
+        public static double L1Norm(double[,] matrix)
         {
-            double[,] result = new double[matrix.GetLength(0), matrix.GetLength(1)];
-
-            for (int i = 0; i < matrix.GetLength(0); i++)
+            double norm = 0;
+            foreach (double d in matrix)
             {
-                for (int j = 0; j < matrix.GetLength(1); j++)
-                {
-                    result[i, j] = Math.Log(matrix[i, j]);
-                }
+                norm += Math.Abs(d);
             }
-
-            return result;
+            return norm;
         }
+
+        /// <summary>
+        /// 二乗和の平方根。Euclid norm
+        /// </summary>
+        /// <param name="matrix"></param>
+        /// <returns></returns>
+        public static double L2Norm(double[,] matrix)
+        {
+            double norm = 0;
+            foreach (double d in matrix)
+            {
+                norm += d * d;
+            }
+            return Math.Sqrt(norm);
+        }
+
+
+
 
     }
 

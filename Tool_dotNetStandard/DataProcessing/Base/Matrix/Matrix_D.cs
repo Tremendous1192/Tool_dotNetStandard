@@ -15,11 +15,7 @@ namespace Tool_dotNetStandard.DataProcessing.Base
         /// <returns></returns>
         public static double Determinant(double[,] matrix)
         {
-            if (matrix.GetLength(0) != matrix.GetLength(1))
-            {
-                throw new FormatException("Align the number of " + nameof(matrix) + " row (" + matrix.GetLength(0) + ") with the number of colmun of matrix (" + matrix.GetLength(1) + ")");
-            }
-
+            Matrix.SquareMatrix(matrix);
 
             double[,] calculated = new double[matrix.GetLength(0), matrix.GetLength(1)];
             for (int i = 0; i < matrix.GetLength(0); i++)
@@ -29,7 +25,6 @@ namespace Tool_dotNetStandard.DataProcessing.Base
                     calculated[i, j] = matrix[i, j];
                 }
             }
-
 
             double upper = 1.0;
             double lower = 1.0;

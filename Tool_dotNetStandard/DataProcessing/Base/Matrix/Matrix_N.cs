@@ -7,56 +7,25 @@ namespace Tool_dotNetStandard.DataProcessing.Base
     public partial class Matrix
     {
 
-
         /// <summary>
-        /// 絶対値の最大値を返す.
-        /// Returns the maximum absolute value .
+        /// 行列の各要素の自然対数をとる。
         /// </summary>
         /// <param name="matrix"></param>
         /// <returns></returns>
-        public static double Norm_Infinity(double[,] matrix)
+        public static double[,] NaturalLogarithm(double[,] matrix)
         {
-            double norm = 0.0;
-            foreach (double d in matrix)
+            double[,] result = new double[matrix.GetLength(0), matrix.GetLength(1)];
+            for (int i = 0; i < matrix.GetLength(0); i++)
             {
-                norm = Math.Max(norm, Math.Abs(d));
+                for (int j = 0; j < matrix.GetLength(1); j++)
+                {
+                    result[i, j] = Math.Log(matrix[i, j]);
+                }
             }
-
-            return norm;
+            return result;
         }
 
 
-        /// <summary>
-        /// 絶対値の和。Manhattan norm
-        /// </summary>
-        /// <param name="matrix"></param>
-        /// <returns></returns>
-        public static double Norm_L1(double[,] matrix)
-        {
-            double norm = 0;
-            foreach (double d in matrix)
-            {
-                norm += Math.Abs(d);
-            }
-
-            return norm;
-        }
-
-        /// <summary>
-        /// 二乗和の平方根。Euclid norm
-        /// </summary>
-        /// <param name="matrix"></param>
-        /// <returns></returns>
-        public static double Norm_L2(double[,] matrix)
-        {
-            double norm = 0;
-            foreach (double d in matrix)
-            {
-                norm += d * d;
-            }
-
-            return Math.Sqrt(norm);
-        }
 
     }
 

@@ -16,9 +16,9 @@ namespace Tool_dotNetStandard.DataProcessing.MachineLerning.NeuralNetWork
         {
             this.Input = input;
 
-            this.WX = Matrix.Multiplication(this.W, this.Input);
+            this.WX = Matrix.Multiply(this.W, this.Input);
 
-            this.WXplusB = Matrix.Addition(this.WX, this.B);
+            this.WXplusB = Matrix.Add(this.WX, this.B);
 
             this.fWXplusB = activationFunction.Calculate_f_u(this.WXplusB);
 

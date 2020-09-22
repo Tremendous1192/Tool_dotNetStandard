@@ -7,49 +7,48 @@ namespace Tool_dotNetStandard.DataProcessing.Base
     public partial class Matrix
     {
 
+
+        /// <summary>
+        /// 絶対値の最大値を返す.
+        /// Returns the maximum absolute value .
+        /// </summary>
+        /// <param name="matrix"></param>
+        /// <returns></returns>
+        public static double InfinityNorm(double[,] matrix)
+        {
+            double norm = 0.0;
+            foreach (double d in matrix)
+            {
+                norm = norm < Math.Abs(d) ? Math.Abs(d) : norm;
+            }
+            return norm;
+        }
+
+
+
         /// <summary>
         /// 逆行列.
         /// Inverse matrix .
         /// </summary>
         /// <param name="matrix"></param>
         /// <returns></returns>
-        public static double[,] Inverse_of_a_Matrix(double[,] matrix)
+        public static double[,] Inverse(double[,] matrix)
         {
-            if (matrix.GetLength(0) != matrix.GetLength(1))
-            {
-                throw new FormatException("Align the number of " + nameof(matrix) + " row (" + matrix.GetLength(0) + ") with the number of colmun of matrix (" + matrix.GetLength(1) + ")");
-            }
+            Matrix.SquareMatrix(matrix);
+
+            //オフセット済み
+            double[,] offset = Matrix.OffsetDiagonal(matrix);
 
             //掃き出し法で計算する行列の生成
             double[,] sweeped = new double[matrix.GetLength(0), matrix.GetLength(1) * 2];
-
-
-            //正則化項を加える(non-zero要素の絶対値の内、最小値の1/1,000,000とする)
-            double abs_min = double.MaxValue;
-            for (int i = 0; i < matrix.GetLength(0); i++)
+            for (int i = 0; i < offset.GetLength(0); i++)
             {
-                for (int j = 0; j < matrix.GetLength(1); j++)
+                for (int j = 0; j < offset.GetLength(1); j++)
                 {
-                    if (matrix[i, j].CompareTo(0) == 0)
-                    {
-                        continue;
-                    }
-                    else
-                    {
-                        abs_min = Math.Min(abs_min, Math.Abs(matrix[i, j]));
-                    }
-                }
-            }
-            double scaling = abs_min / 1000.0 / 1000.0;
-            for (int i = 0; i < matrix.GetLength(0); i++)
-            {
-                for (int j = 0; j < matrix.GetLength(1); j++)
-                {
-                    sweeped[i, j] = matrix[i, j] + scaling;
+                    sweeped[i, j] = offset[i, j];
                 }
                 sweeped[i, i + matrix.GetLength(1)] = 1.0;
             }
-
 
             //掃き出し法の計算
             // [i , i ]を基準とする。
@@ -78,7 +77,6 @@ namespace Tool_dotNetStandard.DataProcessing.Base
                 }
             }
 
-
             //戻り値は、matrix.GetLength(1)列目以降の行列
             double[,] result = new double[matrix.GetLength(0), matrix.GetLength(1)];
             for (int i = 0; i < matrix.GetLength(0); i++)
@@ -88,7 +86,6 @@ namespace Tool_dotNetStandard.DataProcessing.Base
                     result[i, j] = sweeped[i, j + matrix.GetLength(1)];
                 }
             }
-
             return result;
         }
 

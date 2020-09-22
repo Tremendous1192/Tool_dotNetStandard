@@ -7,27 +7,36 @@ namespace Tool_dotNetStandard.DataProcessing.Base
     public partial class Matrix
     {
 
+        /// <summary>
+        /// 行列の行と列が等しいことを確認する.
+        /// </summary>
+        /// <param name="m1"></param>
+        /// <param name="m2"></param>
+        private static void SameSize(double[,] m1, double[,] m2)
+        {
+            if (m1.GetLength(0) != m2.GetLength(0))
+            {
+                throw new FormatException("Align Row length of " + nameof(m1) + "(" + m1.GetLength(0) + ")" + " with that of " + nameof(m2) + "(" + m2.GetLength(0) + ")");
+            }
+            else if (m1.GetLength(1) != m2.GetLength(1))
+            {
+                throw new FormatException("Align column length of " + nameof(m1) + "(" + m1.GetLength(1) + ")" + " with that of " + nameof(m2) + "(" + m2.GetLength(1) + ")");
+            }
+        }
+
 
         /// <summary>
-        /// 行列のスカラー倍 .
-        /// Scalar multiple of matrix .
+        /// 正方行列であることを確認する.
         /// </summary>
         /// <param name="matrix"></param>
-        /// <param name="multiple"></param>
-        /// <returns></returns>
-        public static double[,] ScalarMultiplication(double[,] matrix, double multiple)
+        private static void SquareMatrix(double[,] matrix)
         {
-            double[,] result = new double[matrix.GetLength(0), matrix.GetLength(1)];
-            for (int j = 0; j < matrix.GetLength(0); j++)
+            if (matrix.GetLength(0) != matrix.GetLength(1))
             {
-                for (int k = 0; k < matrix.GetLength(1); k++)
-                {
-                    result[j, k] = matrix[j, k] * multiple;
-                }
+                throw new FormatException("Align the number of " + nameof(matrix) + " row (" + matrix.GetLength(0) + ") with the number of colmun of matrix (" + matrix.GetLength(1) + ")");
             }
-
-            return result;
         }
+
 
         /// <summary>
         /// 区分行列を取り出す。
@@ -39,13 +48,9 @@ namespace Tool_dotNetStandard.DataProcessing.Base
         /// <param name="columnIndex"></param>
         /// <param name="columnCount"></param>
         /// <returns></returns>
-        public static double[,] SubMatrix(double[,] matrix, int rowIndex, int rowCount, int columnIndex, int columnCount)
+        public static double[,] SubMatrix(double[,] matrix, uint rowIndex, uint rowCount, uint columnIndex, uint columnCount)
         {
-            if (columnIndex < 0)
-            {
-                throw new FormatException("column " + columnIndex + " must be equal or higer than 0 ");
-            }
-            else if (columnIndex >= matrix.GetLength(1))
+            if (columnIndex >= matrix.GetLength(1))
             {
                 throw new FormatException("column " + columnIndex + " must be less than matrix colmun " + matrix.GetLength(1));
             }
@@ -58,11 +63,7 @@ namespace Tool_dotNetStandard.DataProcessing.Base
                 throw new FormatException("sumation of base and sub column " + columnIndex + " + " + columnCount + " must be less than matrix colmun " + matrix.GetLength(1));
             }
 
-            if (rowIndex < 0)
-            {
-                throw new FormatException("row " + rowIndex + " must be equal or higer than 0 ");
-            }
-            else if (rowIndex >= matrix.GetLength(0))
+            if (rowIndex >= matrix.GetLength(0))
             {
                 throw new FormatException("row " + rowIndex + " must be less than matrix row " + matrix.GetLength(0));
             }
@@ -75,9 +76,7 @@ namespace Tool_dotNetStandard.DataProcessing.Base
                 throw new FormatException("sumation of base and sub row " + rowIndex + " + " + rowCount + " must be less than matrix row " + matrix.GetLength(0));
             }
 
-
             double[,] result = new double[rowCount, columnCount];
-
             for (int i = 0; i < result.GetLength(0); i++)
             {
                 for (int j = 0; j < result.GetLength(1); j++)
@@ -85,7 +84,6 @@ namespace Tool_dotNetStandard.DataProcessing.Base
                     result[i, j] = matrix[rowIndex + i, columnIndex + j];
                 }
             }
-
             return result;
         }
 
@@ -97,19 +95,11 @@ namespace Tool_dotNetStandard.DataProcessing.Base
         /// <param name="m1"></param>
         /// <param name="m2"></param>
         /// <returns></returns>
-        public static double[,] Subtraction(double[,] m1, double[,] m2)
+        public static double[,] Subtract(double[,] m1, double[,] m2)
         {
-            if (m1.GetLength(0) != m2.GetLength(0))
-            {
-                throw new FormatException("Align Row length of " + nameof(m1) + "(" + m1.GetLength(0) + ")" + " with that of " + nameof(m2) + "(" + m2.GetLength(0) + ")");
-            }
-            else if (m1.GetLength(1) != m2.GetLength(1))
-            {
-                throw new FormatException("Align column length of " + nameof(m1) + "(" + m1.GetLength(1) + ")" + " with that of " + nameof(m2) + "(" + m2.GetLength(1) + ")");
-            }
+            Matrix.SameSize(m1, m2);
 
             double[,] result = new double[m1.GetLength(0), m1.GetLength(1)];
-
             for (int j = 0; j < m1.GetLength(0); j++)
             {
                 for (int k = 0; k < m1.GetLength(1); k++)
@@ -126,7 +116,7 @@ namespace Tool_dotNetStandard.DataProcessing.Base
         /// </summary>
         /// <param name="m1"></param>
         /// <returns></returns>
-        public static double[,] Sign_Element(double[,] m1)
+        public static double[,] Sign(double[,] m1)
         {
             double[,] result = new double[m1.GetLength(0), m1.GetLength(1)];
             for (int j = 0; j < m1.GetLength(0); j++)
@@ -145,7 +135,7 @@ namespace Tool_dotNetStandard.DataProcessing.Base
         /// </summary>
         /// <param name="matrix"></param>
         /// <returns></returns>
-        public static double Summation_X(double[,] matrix)
+        public static double Sums(double[,] matrix)
         {
             double result = 0.0;
             foreach (double m in matrix) { result += m; }

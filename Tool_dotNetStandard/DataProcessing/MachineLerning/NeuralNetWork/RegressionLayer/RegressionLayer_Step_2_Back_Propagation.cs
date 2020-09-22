@@ -18,12 +18,12 @@ namespace Tool_dotNetStandard.DataProcessing.MachineLerning.NeuralNetWork
             //損失関数の計算
             this.CorrectData = correctData;
 
-            this.Error = Matrix.Subtraction(this.fWXplusB, correctData);
+            this.Error = Matrix.Subtract(this.fWXplusB, correctData);
             this.ObjectiveFunction = this.Error[0, 0] * this.Error[0, 0] / 2;
 
             //誤差逆伝搬法のδの計算
-            this.Delta = Matrix.Hadamard_product(this.Error, this.fWXplusB);
-            this.DifferentialWithW = Matrix.Multiplication(this.Delta, InputTranspose);
+            this.Delta = Matrix.HadamardMultiply(this.Error, this.fWXplusB);
+            this.DifferentialWithW = Matrix.Multiply(this.Delta, InputTranspose);
         }
 
     }

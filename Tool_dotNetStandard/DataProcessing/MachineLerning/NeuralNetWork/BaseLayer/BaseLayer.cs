@@ -33,7 +33,7 @@ namespace Tool_dotNetStandard.DataProcessing.MachineLerning.NeuralNetWork
         /// <returns></returns>
         public double[,] InputTranspose
         {
-            get { return Matrix.TransposeMatrix(input); }
+            get { return Matrix.Transpose(input); }
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Tool_dotNetStandard.DataProcessing.MachineLerning.NeuralNetWork
         /// <returns></returns>
         public double[,] WTranspose
         {
-            get { return Matrix.TransposeMatrix(w); }
+            get { return Matrix.Transpose(w); }
         }
 
 
@@ -116,7 +116,7 @@ namespace Tool_dotNetStandard.DataProcessing.MachineLerning.NeuralNetWork
         /// </summary>
         public double[,] fWXplusBTranspose
         {
-            get { return Matrix.TransposeMatrix(f_wx_plus_b); }
+            get { return Matrix.Transpose(f_wx_plus_b); }
         }
 
 

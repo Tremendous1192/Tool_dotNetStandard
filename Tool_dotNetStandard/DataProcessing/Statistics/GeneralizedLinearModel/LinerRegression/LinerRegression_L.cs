@@ -31,13 +31,13 @@ namespace Tool_dotNetStandard.DataProcessing.Statistics.GeneralizedLinearModel
 
 
 
-            double[,] X_T = Matrix.TransposeMatrix(design_matrix_with_constant_1);
-            double[,] X_T_cross_X = Matrix.Multiplication(X_T, design_matrix_with_constant_1);
+            double[,] X_T = Matrix.Transpose(design_matrix_with_constant_1);
+            double[,] X_T_cross_X = Matrix.Multiply(X_T, design_matrix_with_constant_1);
 
-            double[,] X_T_cross_X_Inverse = Matrix.Inverse_of_a_Matrix(X_T_cross_X);
+            double[,] X_T_cross_X_Inverse = Matrix.Inverse(X_T_cross_X);
 
-            double[,] w = Matrix.Multiplication(X_T_cross_X_Inverse, X_T);
-            w = Matrix.Multiplication(w, column_vector_y);
+            double[,] w = Matrix.Multiply(X_T_cross_X_Inverse, X_T);
+            w = Matrix.Multiply(w, column_vector_y);
 
             return w;
         }

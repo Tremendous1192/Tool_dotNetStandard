@@ -30,15 +30,15 @@ namespace Tool_dotNetStandard.DataProcessing.MachineLerning.NeuralNetWork
 
             //deltaの計算は、ratioとerrorの計算を省略した形で書ける
             //delta = Matrix.Hadamard_product(error, f_wx_plus_b);
-            this.Delta = Matrix.ScalarMultiplication(this.CorrectData, -1);
+            this.Delta = Matrix.Multiply(this.CorrectData, -1);
 
-            this.DifferentialWithW = Matrix.Multiplication(this.Delta, this.InputTranspose);
+            this.DifferentialWithW = Matrix.Multiply(this.Delta, this.InputTranspose);
 
 
             //損失関数の計算
-            double[,] ln_output = Matrix.Logarithm_LN(this.fWXplusB);
-            double[,] product = Matrix.Hadamard_product(this.CorrectData, ln_output);
-            this.ObjectiveFunction = -Matrix.Summation_X(product);
+            double[,] ln_output = Matrix.NaturalLogarithm(this.fWXplusB);
+            double[,] product = Matrix.HadamardMultiply(this.CorrectData, ln_output);
+            this.ObjectiveFunction = -Matrix.Sums(product);
         }
 
 

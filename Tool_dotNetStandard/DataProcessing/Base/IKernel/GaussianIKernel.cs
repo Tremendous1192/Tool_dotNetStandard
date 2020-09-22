@@ -16,7 +16,7 @@ namespace Tool_dotNetStandard.DataProcessing.Base
         {
             set = true;
             double[,] varianceCovariance = DesignMatrix.Variance_Covariance_Matrix(designMatrix);
-            inverse_Variance_Covariance_Matrix = Matrix.Inverse_of_a_Matrix(varianceCovariance);
+            inverse_Variance_Covariance_Matrix = Matrix.Inverse(varianceCovariance);
 
             double determinant = Math.Sqrt(Math.Abs(Matrix.Determinant(varianceCovariance)));
             coefficient = Math.Pow(2 * Math.PI, varianceCovariance.GetLength(1) / 2.0) * determinant;
@@ -25,19 +25,19 @@ namespace Tool_dotNetStandard.DataProcessing.Base
 
         public double Calculate(double[,] row_Vector_1, double[,] row_Vector_2)
         {
-            double[,] delta_row = Matrix.Subtraction(row_Vector_1, row_Vector_2);
+            double[,] delta_row = Matrix.Subtract(row_Vector_1, row_Vector_2);
             if (set)
             {
-                double[,] delta_column = Matrix.TransposeMatrix(delta_row);
+                double[,] delta_column = Matrix.Transpose(delta_row);
 
-                double[,] product = Matrix.Multiplication(delta_row, inverse_Variance_Covariance_Matrix);
-                product = Matrix.Multiplication(product, delta_column);
+                double[,] product = Matrix.Multiply(delta_row, inverse_Variance_Covariance_Matrix);
+                product = Matrix.Multiply(product, delta_column);
 
                 return Math.Exp(-product[0, 0] / 2.0) / coefficient;
             }
             else
             {
-                double norm = Matrix.Norm_L2(delta_row);
+                double norm = Matrix.L2Norm(delta_row);
 
                 return Math.Exp(-norm * norm / 2.0) / Math.Pow(2 * Math.PI, 1.0 / 2.0);
             }

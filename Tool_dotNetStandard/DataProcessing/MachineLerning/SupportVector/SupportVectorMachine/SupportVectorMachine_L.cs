@@ -37,12 +37,12 @@ namespace Tool_dotNetStandard.DataProcessing.MachineLerning.SupportVector
 
             //カーネルを計算しておく
             double k_jk = 0;
-            for (int j = 0; j < design_Matrix_without_Constant.GetLength(0); j++)
+            for (uint j = 0; j < design_Matrix_without_Constant.GetLength(0); j++)
             {
-                r_j = Matrix.Pick_Up_Row_Vector(design_Matrix_without_Constant, j);
-                for (int k = j; k < design_Matrix_without_Constant.GetLength(0); k++)
+                r_j = Matrix.Row(design_Matrix_without_Constant, j);
+                for (uint k = j; k < design_Matrix_without_Constant.GetLength(0); k++)
                 {
-                    r_k = Matrix.Pick_Up_Row_Vector(design_Matrix_without_Constant, k);
+                    r_k = Matrix.Row(design_Matrix_without_Constant, k);
 
                     k_jk = iKernel.Calculate(r_j, r_k);
 
@@ -69,14 +69,14 @@ namespace Tool_dotNetStandard.DataProcessing.MachineLerning.SupportVector
 
             //学習
             //2点のデータを選択する
-            for (int j = 0; j < design_Matrix_without_Constant.GetLength(0); j++)
+            for (uint j = 0; j < design_Matrix_without_Constant.GetLength(0); j++)
             {
                 //計画行列からj行目のベクトルを取り出す
-                r_j = Matrix.Pick_Up_Row_Vector(design_Matrix_without_Constant, j);
-                for (int k = j + 1; k < design_Matrix_without_Constant.GetLength(0); k++)
+                r_j = Matrix.Row(design_Matrix_without_Constant, j);
+                for (uint k = j + 1; k < design_Matrix_without_Constant.GetLength(0); k++)
                 {
                     //計画行列からk行目のベクトルを取り出す
-                    r_k = Matrix.Pick_Up_Row_Vector(design_Matrix_without_Constant, k);
+                    r_k = Matrix.Row(design_Matrix_without_Constant, k);
 
                     //ベクトルr_j r_kの予測計算を行う
                     predict_j = 0;
