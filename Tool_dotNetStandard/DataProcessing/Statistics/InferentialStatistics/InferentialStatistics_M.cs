@@ -43,7 +43,7 @@ namespace Tool_dotNetStandard.DataProcessing.Statistics
         {
 
             //配列を昇順に並べ替える。
-            double[,] sorted = InferentialStatistics.Sorted_in_Ascending_Order(designMatrix);
+            double[,] sorted = InferentialStatistics.AscendingSort(designMatrix);
 
 
             double[,] median = new double[1, sorted.GetLength(1)];

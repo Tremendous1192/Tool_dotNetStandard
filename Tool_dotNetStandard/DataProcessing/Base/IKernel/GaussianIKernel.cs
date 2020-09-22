@@ -15,7 +15,7 @@ namespace Tool_dotNetStandard.DataProcessing.Base
         public void SetDesignMatrix(double[,] designMatrix)
         {
             set = true;
-            double[,] varianceCovariance = DesignMatrix.Variance_Covariance_Matrix(designMatrix);
+            double[,] varianceCovariance = DesignMatrix.VarianceCovariance(designMatrix);
             inverse_Variance_Covariance_Matrix = Matrix.Inverse(varianceCovariance);
 
             double determinant = Math.Sqrt(Math.Abs(Matrix.Determinant(varianceCovariance)));

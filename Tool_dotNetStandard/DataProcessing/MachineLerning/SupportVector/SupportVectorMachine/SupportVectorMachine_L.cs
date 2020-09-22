@@ -19,14 +19,13 @@ namespace Tool_dotNetStandard.DataProcessing.MachineLerning.SupportVector
         /// <param name="iKernel"></param>
         /// <param name="variance_Covariance_Matrix"></param>
         /// <returns></returns>
-        public static double[,] Learn(double[,] labelY, double[,] design_Matrix_without_Constant, IKernel iKernel)
+        public static double[,] Learn(double[,] labelY, double[,] design_Matrix_without_Constant, IKernel iKernel, byte hyperParameterExponent)
         {
             //カーネルのセット
             iKernel.SetDesignMatrix(design_Matrix_without_Constant);
-            //iKernel.Set_Variance_Covariance_Matrix(DesignMatrix.Variance_Covariance_Matrix(design_Matrix_without_Constant));
 
-            //係数の最大値
-            double Hyper_Parameter_C = 1.0;// Math.Min(1.0, 1.0 / design_Matrix.GetLength(0));
+            //係数の最大値(ハイパーパラメーター)
+            double hyperParameterC = Math.Pow(2, hyperParameterExponent);
 
             //カーネル行列
             double[,] kernel_Matrix = new double[design_Matrix_without_Constant.GetLength(0), design_Matrix_without_Constant.GetLength(0)];
@@ -66,7 +65,6 @@ namespace Tool_dotNetStandard.DataProcessing.MachineLerning.SupportVector
             double min = 0;
             double max = 0;
 
-
             //学習
             //2点のデータを選択する
             for (uint j = 0; j < design_Matrix_without_Constant.GetLength(0); j++)
@@ -100,11 +98,11 @@ namespace Tool_dotNetStandard.DataProcessing.MachineLerning.SupportVector
                     //場合分け
                     if (labelY[j, 0] * labelY[k, 0] > 0)
                     {
-                        min = Math.Min(Hyper_Parameter_C
+                        min = Math.Min(hyperParameterC
                             , coefficient_Matrix_A[j, 0] + coefficient_Matrix_A[k, 0]);
                         max = Math.Max(0
                             , coefficient_Matrix_A[j, 0] + coefficient_Matrix_A[k, 0]
-                            - Hyper_Parameter_C);
+                            - hyperParameterC);
                         if (min < coefficient_Matrix_A[k, 0])
                         {
                             a_k = min;
@@ -120,8 +118,8 @@ namespace Tool_dotNetStandard.DataProcessing.MachineLerning.SupportVector
                     }
                     else
                     {
-                        min = Math.Min(Hyper_Parameter_C
-                            , Hyper_Parameter_C
+                        min = Math.Min(hyperParameterC
+                            , hyperParameterC
                             - coefficient_Matrix_A[j, 0] + coefficient_Matrix_A[k, 0]);
                         max = Math.Max(0
                             , -coefficient_Matrix_A[j, 0] + coefficient_Matrix_A[k, 0]);

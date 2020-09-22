@@ -27,7 +27,7 @@ namespace Tool_dotNetStandard.DataProcessing.Statistics.GeneralizedLinearModel
                 throw new FormatException(nameof(design_matrix_without_constant) + "の行" + design_matrix_without_constant.GetLength(0) + "と、" + nameof(column_vector_y) + "の行" + column_vector_y.GetLength(0) + "が異なります。");
             }
 
-            double[,] design_matrix_with_constant_1 = LinerRegression.Add_Constant_1(design_matrix_without_constant);
+            double[,] design_matrix_with_constant_1 = LinerRegression.AddConstant1(design_matrix_without_constant);
 
 
 

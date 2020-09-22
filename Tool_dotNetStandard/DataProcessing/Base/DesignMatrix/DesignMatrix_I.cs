@@ -15,7 +15,7 @@ namespace Tool_dotNetStandard.DataProcessing.Base
         /// <returns></returns>
         public static double[,] Inverse_Variance_Covariance_Matrix(double[,] designMatrix)
         {
-            return Matrix.Inverse(DesignMatrix.Variance_Covariance_Matrix(designMatrix));
+            return Matrix.Inverse(DesignMatrix.VarianceCovariance(designMatrix));
         }
 
     }

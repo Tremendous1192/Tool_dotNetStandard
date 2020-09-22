@@ -13,7 +13,7 @@ namespace Tool_dotNetStandard.DataProcessing.Statistics
         /// </summary>
         /// <param name="designMatrix"></param>
         /// <returns></returns>
-        public static double[,] Variance_Covariance_Matrix_Nonbias(double[,] designMatrix)
+        public static double[,] VarianceCovarianceNonbias(double[,] designMatrix)
         {
             //ベクトルの総和を計算する。
             double[] mean = new double[designMatrix.GetLength(1)];

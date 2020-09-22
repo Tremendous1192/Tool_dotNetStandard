@@ -13,7 +13,7 @@ namespace Tool_dotNetStandard.DataProcessing.Base
         /// </summary>
         /// <param name="designMatrix"></param>
         /// <returns></returns>
-        public static double[,] Variance_Covariance_Matrix(double[,] designMatrix)
+        public static double[,] VarianceCovariance(double[,] designMatrix)
         {
 
             double[,] average = DesignMatrix.Average(designMatrix);

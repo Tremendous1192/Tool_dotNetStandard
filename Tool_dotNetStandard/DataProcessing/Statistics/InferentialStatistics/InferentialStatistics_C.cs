@@ -12,11 +12,11 @@ namespace Tool_dotNetStandard.DataProcessing.Statistics
         /// </summary>
         /// <param name="designMatrix"></param>
         /// <returns></returns>
-        public static double[,] Correlation_Matrix_Sample(double[,] designMatrix)
+        public static double[,] Correlation(double[,] designMatrix)
         {
 
             //分散共分散行列
-            double[,] variance_Covariance_Matrix = InferentialStatistics.Variance_Covariance_Matrix_Nonbias(designMatrix);
+            double[,] variance_Covariance_Matrix = InferentialStatistics.VarianceCovarianceNonbias(designMatrix);
 
             //標準偏差を計算する
             double[] std = new double[designMatrix.GetLength(1)];

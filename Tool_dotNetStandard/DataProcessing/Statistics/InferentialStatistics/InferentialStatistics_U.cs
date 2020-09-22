@@ -12,11 +12,11 @@ namespace Tool_dotNetStandard.DataProcessing.Statistics
         /// </summary>
         /// <param name="designMatrix"></param>
         /// <returns></returns>
-        public static double[,] Upper_Quartile_Sample(double[,] designMatrix)
+        public static double[,] UpperQuartile(double[,] designMatrix)
         {
 
             //配列を昇順に並べ替える。
-            double[,] sorted = InferentialStatistics.Sorted_in_Ascending_Order(designMatrix);
+            double[,] sorted = InferentialStatistics.AscendingSort(designMatrix);
 
             double[,] upperQuartile = new double[1, sorted.GetLength(1)];
 

@@ -12,7 +12,7 @@ namespace Tool_dotNetStandard.DataProcessing.Statistics.GeneralizedLinearModel
         /// </summary>
         /// <param name="design_matrix_without_constant"></param>
         /// <returns></returns>
-        public static double[,] Add_Constant_1(double[,] design_matrix_without_constant)
+        public static double[,] AddConstant1(double[,] design_matrix_without_constant)
         {
             double[,] design_matrix_with_constant_1 = new double[design_matrix_without_constant.GetLength(0)
                 , design_matrix_without_constant.GetLength(1) + 1];

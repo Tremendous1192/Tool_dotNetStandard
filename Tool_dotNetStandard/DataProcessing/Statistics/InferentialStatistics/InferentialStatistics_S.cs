@@ -14,11 +14,9 @@ namespace Tool_dotNetStandard.DataProcessing.Statistics
         /// </summary>
         /// <param name="designMatrix"></param>
         /// <returns></returns>
-        public static double[,] Sorted_in_Ascending_Order(double[,] designMatrix)
+        public static double[,] AscendingSort(double[,] designMatrix)
         {
-            //並べ替え用の配列。design_matrixを計算に用いると参照渡しになるバグがある。
             double[,] sorted = Matrix.Clone(designMatrix);
-
             for (int i1 = 0; i1 < designMatrix.GetLength(0) - 1; i1++)
             {
                 for (int i2 = i1 + 1; i2 < designMatrix.GetLength(0); i2++)
@@ -32,7 +30,6 @@ namespace Tool_dotNetStandard.DataProcessing.Statistics
                     }
                 }
             }
-
             return sorted;
         }
 
@@ -42,7 +39,7 @@ namespace Tool_dotNetStandard.DataProcessing.Statistics
         /// </summary>
         /// <param name="designMatrix"></param>
         /// <returns></returns>
-        public static double[,] Nonbias_Standard_Deviation(double[,] designMatrix)
+        public static double[,] StandardDeviationNonbias(double[,] designMatrix)
         {
             //平均を計算する
             double[] mean = new double[designMatrix.GetLength(1)];
@@ -99,7 +96,7 @@ namespace Tool_dotNetStandard.DataProcessing.Statistics
         {
 
             //配列を昇順に並べ替える。
-            double[,] sorted = InferentialStatistics.Sorted_in_Ascending_Order(designMatrix);
+            double[,] sorted = InferentialStatistics.AscendingSort(designMatrix);
 
 
             double[,] summary = new double[9, sorted.GetLength(1)];

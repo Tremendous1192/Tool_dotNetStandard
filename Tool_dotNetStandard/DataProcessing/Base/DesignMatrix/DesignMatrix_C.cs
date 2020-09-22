@@ -12,7 +12,7 @@ namespace Tool_dotNetStandard.DataProcessing.Base
         /// </summary>
         /// <param name="designMatrix"></param>
         /// <returns></returns>
-        public static double[,] CorelationMatrix(double[,] designMatrix)
+        public static double[,] Corelation(double[,] designMatrix)
         {
             double[,] average = DesignMatrix.Average(designMatrix);
 
