@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 
+using Tool_dotNetStandard.DataProcessing.Base;
+
 namespace Tool_dotNetStandard.DataProcessing.Statistics
 {
     public partial class InferentialStatistics
@@ -15,12 +17,12 @@ namespace Tool_dotNetStandard.DataProcessing.Statistics
         public static double[,] Maximum(double[,] designMatrix)
         {
             double[,] sorted = InferentialStatistics.AscendingSort(designMatrix);
-            double[,] max = new double[1, designMatrix.GetLength(1)];
+            double[] max = new double[designMatrix.GetLength(1)];
             for (int j = 0; j < designMatrix.GetLength(1); j++)
             {
-                max[0, j] = sorted[sorted.GetLength(0) - 1, j];
+                max[j] = sorted[sorted.GetLength(0) - 1, j];
             }
-            return max;
+            return TypeChange.Change_Array_1_to_2(max, max.Length);
         }
 
         /// <summary>
@@ -31,12 +33,12 @@ namespace Tool_dotNetStandard.DataProcessing.Statistics
         public static double[,] Minimum(double[,] designMatrix)
         {
             double[,] sorted = InferentialStatistics.AscendingSort(designMatrix);
-            double[,] min = new double[1, designMatrix.GetLength(1)];
+            double[] min = new double[designMatrix.GetLength(1)];
             for (int j = 0; j < designMatrix.GetLength(1); j++)
             {
-                min[0, j] = sorted[0, j];
+                min[j] = sorted[0, j];
             }
-            return min;
+            return TypeChange.Change_Array_1_to_2(min, min.Length);
         }
 
     }

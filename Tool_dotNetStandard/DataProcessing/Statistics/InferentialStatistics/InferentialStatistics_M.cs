@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 
+using Tool_dotNetStandard.DataProcessing.Base;
+
 namespace Tool_dotNetStandard.DataProcessing.Statistics
 {
     public partial class InferentialStatistics
@@ -16,21 +18,21 @@ namespace Tool_dotNetStandard.DataProcessing.Statistics
         /// <returns></returns>
         public static double[,] Mean(double[,] designMatrix)
         {
-            double[,] mean = new double[1, designMatrix.GetLength(1)];
+            double[] mean = new double[designMatrix.GetLength(1)];
             for (int i = 0; i < designMatrix.GetLength(0); i++)
             {
                 for (int j = 0; j < designMatrix.GetLength(1); j++)
                 {
-                    mean[0, j] += designMatrix[i, j];
+                    mean[j] += designMatrix[i, j];
 
                 }
             }
             for (int j = 0; j < designMatrix.GetLength(1); j++)
             {
-                mean[0, j] /= designMatrix.GetLength(0);
+                mean[j] /= designMatrix.GetLength(0);
             }
 
-            return mean;
+            return TypeChange.Change_Array_1_to_2(mean, mean.Length);
         }
 
 
@@ -46,7 +48,7 @@ namespace Tool_dotNetStandard.DataProcessing.Statistics
             double[,] sorted = InferentialStatistics.AscendingSort(designMatrix);
 
 
-            double[,] median = new double[1, sorted.GetLength(1)];
+            double[] median = new double[sorted.GetLength(1)];
 
             //中央値は、要素数を2で割ったときのあまりで計算が異なる。
             int median_point = sorted.GetLength(0) / 2;
@@ -54,18 +56,18 @@ namespace Tool_dotNetStandard.DataProcessing.Statistics
             {
                 for (int j = 0; j < sorted.GetLength(1); j++)
                 {
-                    median[0, j] = (sorted[median_point, j] + sorted[Math.Max(median_point - 1, 0), j]) / 2;
+                    median[j] = (sorted[median_point, j] + sorted[Math.Max(median_point - 1, 0), j]) / 2;
                 }
             }
             else
             {
                 for (int j = 0; j < sorted.GetLength(1); j++)
                 {
-                    median[0, j] = sorted[median_point, j];
+                    median[j] = sorted[median_point, j];
                 }
             }
 
-            return median;
+            return TypeChange.Change_Array_1_to_2(median, median.Length);
         }
 
 

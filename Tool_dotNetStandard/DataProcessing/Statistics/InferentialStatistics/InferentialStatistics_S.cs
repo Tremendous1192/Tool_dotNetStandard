@@ -56,26 +56,26 @@ namespace Tool_dotNetStandard.DataProcessing.Statistics
             }
 
 
-            double[,] standardDeviation = new double[1, designMatrix.GetLength(1)];
+            double[] standardDeviation = new double[designMatrix.GetLength(1)];
             //平方和を計算する。 Σx^2
             for (int i = 0; i < designMatrix.GetLength(0); i++)
             {
                 for (int j = 0; j < designMatrix.GetLength(1); j++)
                 {
-                    standardDeviation[0, j] += designMatrix[i, j] * designMatrix[i, j];
+                    standardDeviation[j] += designMatrix[i, j] * designMatrix[i, j];
                 }
             }
 
             //不偏標準偏差のj次元目の成分を計算する
             for (int j = 0; j < designMatrix.GetLength(1); j++)
             {
-                standardDeviation[0, j] = Math.Sqrt(
-                    (standardDeviation[0, j] - designMatrix.GetLength(0) * mean[j] * mean[j])
+                standardDeviation[j] = Math.Sqrt(
+                    (standardDeviation[j] - designMatrix.GetLength(0) * mean[j] * mean[j])
                     / (designMatrix.GetLength(0) - 1)
                     );
             }
 
-            return standardDeviation;
+            return TypeChange.Change_Array_1_to_2(standardDeviation, standardDeviation.Length);
         }
 
 

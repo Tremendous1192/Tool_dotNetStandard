@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 
+using Tool_dotNetStandard.DataProcessing.Base;
+
 namespace Tool_dotNetStandard.DataProcessing.Statistics
 {
     public partial class InferentialStatistics
@@ -19,7 +21,7 @@ namespace Tool_dotNetStandard.DataProcessing.Statistics
             double[,] sorted = InferentialStatistics.AscendingSort(designMatrix);
 
 
-            double[,] lowerQuartile = new double[1, sorted.GetLength(1)];
+            double[] lowerQuartile = new double[ sorted.GetLength(1)];
 
             //四分位数は、要素数を4で割ったときのあまりで計算が異なる。
             int lower_quartile_point = sorted.GetLength(0) / 4;
@@ -27,18 +29,18 @@ namespace Tool_dotNetStandard.DataProcessing.Statistics
             {
                 for (int j = 0; j < sorted.GetLength(1); j++)
                 {
-                    lowerQuartile[0, j] = (sorted[lower_quartile_point, j] + sorted[Math.Max(lower_quartile_point - 1, 0), j]) / 2;
+                    lowerQuartile[ j] = (sorted[lower_quartile_point, j] + sorted[Math.Max(lower_quartile_point - 1, 0), j]) / 2;
                 }
             }
             else
             {
                 for (int j = 0; j < sorted.GetLength(1); j++)
                 {
-                    lowerQuartile[0, j] = sorted[lower_quartile_point, j];
+                    lowerQuartile[ j] = sorted[lower_quartile_point, j];
                 }
             }
 
-            return lowerQuartile;
+            return TypeChange.Change_Array_1_to_2(lowerQuartile, lowerQuartile.Length);
         }
 
 
