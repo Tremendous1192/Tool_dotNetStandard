@@ -239,7 +239,7 @@ namespace Tool_dotNetStandard.DataProcessing.MachineLerning.NeuralNetWork
         protected UniformDistribution ud;
         public uint Seed
         {
-            get { return ud.Get_Seed(); }
+            get { return ud.GetSeed(); }
         }
 
     }

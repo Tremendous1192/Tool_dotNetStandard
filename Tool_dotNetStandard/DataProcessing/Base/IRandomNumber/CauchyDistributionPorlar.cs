@@ -9,16 +9,16 @@ namespace Tool_dotNetStandard.DataProcessing.Base
         /// <summary>
         /// 計算結果
         /// </summary>
-        double resultDouble;
+        double result;
 
         /// <summary>
         /// 計算結果をもう一度取得する
         /// </summary>
         /// <returns></returns>
-        public double ResultDouble()
+        public double Result()
         {
             UpdateSeed();
-            return resultDouble;
+            return result;
         }
 
         /// <summary>
@@ -29,13 +29,13 @@ namespace Tool_dotNetStandard.DataProcessing.Base
         /// <summary>
         /// 種
         /// </summary>
-        uint seed_1, seed_2;
-        public uint GetSeed1() { return seed_1; }
-        public uint GetSeed2() { return seed_2; }
+        uint seed1, seed2;
+        public uint GetSeed1() { return seed1; }
+        public uint GetSeed2() { return seed2; }
         private void UpdateSeed()
         {
-            seed_1 = ud1.Get_Seed();
-            seed_2 = ud2.Get_Seed();
+            seed1 = ud1.GetSeed();
+            seed2 = ud2.GetSeed();
         }
 
         /// <summary>
@@ -43,10 +43,10 @@ namespace Tool_dotNetStandard.DataProcessing.Base
         /// </summary>
         public CauchyDistributionPorlar()
         {
-            seed_1 = (uint)Math.Abs(DateTime.Now.Millisecond);
-            seed_2 = seed_1 + 1;
-            ud1 = new UniformDistribution(seed_1);
-            ud2 = new UniformDistribution(seed_2);
+            seed1 = (uint)Math.Abs(DateTime.Now.Millisecond);
+            seed2 = seed1 + 1;
+            ud1 = new UniformDistribution(seed1);
+            ud2 = new UniformDistribution(seed2);
 
         }
 
@@ -56,15 +56,15 @@ namespace Tool_dotNetStandard.DataProcessing.Base
         /// <param name="the_seed_1"></param>
         public CauchyDistributionPorlar(uint the_seed_1, uint the_seed_2)
         {
-            seed_1 = the_seed_1;
+            seed1 = the_seed_1;
             if (the_seed_1 == the_seed_2 && the_seed_1 == uint.MaxValue)
-            { seed_2 = 0; }
+            { seed2 = 0; }
             else if (the_seed_1 == the_seed_2)
-            { seed_2 = the_seed_1 + 1; }
-            else { seed_2 = the_seed_2; }
+            { seed2 = the_seed_1 + 1; }
+            else { seed2 = the_seed_2; }
 
-            ud1 = new UniformDistribution(seed_1);
-            ud2 = new UniformDistribution(seed_2);
+            ud1 = new UniformDistribution(seed1);
+            ud2 = new UniformDistribution(seed2);
         }
 
         /// <summary>
@@ -73,15 +73,15 @@ namespace Tool_dotNetStandard.DataProcessing.Base
         /// <param name="the_seed_1"></param>
         public void SetSeed(uint the_seed_1, uint the_seed_2)
         {
-            seed_1 = the_seed_1;
+            seed1 = the_seed_1;
             if (the_seed_1 == the_seed_2 && the_seed_1 == uint.MaxValue)
-            { seed_2 = 0; }
+            { seed2 = 0; }
             else if (the_seed_1 == the_seed_2)
-            { seed_2 = the_seed_1 + 1; }
-            else { seed_2 = the_seed_2; }
+            { seed2 = the_seed_1 + 1; }
+            else { seed2 = the_seed_2; }
 
-            ud1 = new UniformDistribution(seed_1);
-            ud2 = new UniformDistribution(seed_2);
+            ud1 = new UniformDistribution(seed1);
+            ud2 = new UniformDistribution(seed2);
         }
 
         /// <summary>
@@ -106,9 +106,9 @@ namespace Tool_dotNetStandard.DataProcessing.Base
 
             double y = v1 / v2;
 
-            resultDouble = y;
+            result = y;
 
-            return resultDouble;
+            return result;
         }
 
         /// <summary>
@@ -119,8 +119,8 @@ namespace Tool_dotNetStandard.DataProcessing.Base
         /// <returns></returns>
         public double NextDouble(double location, double scale)
         {
-            resultDouble = location + Math.Abs(scale) * NextDouble();
-            return resultDouble;
+            result = location + Math.Abs(scale) * NextDouble();
+            return result;
         }
 
     }

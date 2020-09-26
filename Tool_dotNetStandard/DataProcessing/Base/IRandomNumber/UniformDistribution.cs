@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Tool_dotNetStandard.DataProcessing.Base
@@ -10,30 +11,29 @@ namespace Tool_dotNetStandard.DataProcessing.Base
         /// <summary>
         /// 計算結果
         /// </summary>
-        double result_double;
+        double result;
 
         /// <summary>
         /// 計算結果をもう一度取得する
         /// </summary>
         /// <returns></returns>
-        public double ResultDouble()
-        { return result_double; }
+        public double Result()
+        { return result; }
 
 
         /// <summary>
         /// 種
         /// </summary>
         uint seed, X, Y, Z, W, T;
-        public uint Get_Seed() { return seed; }
+        public uint GetSeed() { return seed; }
 
         /// <summary>
         /// 計算回数
         /// </summary>
-        bool[] counter_array;
-        const uint counter_dimension_max = 19937;
+        bool[] counterArray;
+        const uint counterDimensions = 19937;
 
-
-        const double denominator_double = uint.MaxValue;
+        const double divisor = uint.MaxValue;
 
         /// <summary>
         /// constructor
@@ -46,7 +46,7 @@ namespace Tool_dotNetStandard.DataProcessing.Base
             Z = (UInt32)(seed & 0xFFFFFFFF);
             W = X ^ Z;
 
-            counter_array = new bool[counter_dimension_max];
+            counterArray = new bool[counterDimensions];
 
         }
 
@@ -61,7 +61,7 @@ namespace Tool_dotNetStandard.DataProcessing.Base
             Z = (UInt32)(seed & 0xFFFFFFFF);
             W = X ^ Z;
 
-            counter_array = new bool[counter_dimension_max];
+            counterArray = new bool[counterDimensions];
 
         }
 
@@ -78,7 +78,7 @@ namespace Tool_dotNetStandard.DataProcessing.Base
             Z = (UInt32)(seed & 0xFFFFFFFF);
             W = X ^ Z;
 
-            counter_array = new bool[counter_dimension_max];
+            counterArray = new bool[counterDimensions];
         }
 
         /// <summary>
@@ -96,12 +96,11 @@ namespace Tool_dotNetStandard.DataProcessing.Base
 
             double numerator = W;
 
-            result_double = numerator / denominator_double;
-            //result /= uint.MaxValue;
+            result = numerator / divisor;
 
             CountUp();
 
-            return result_double;
+            return result;
         }
 
         /// <summary>
@@ -111,53 +110,49 @@ namespace Tool_dotNetStandard.DataProcessing.Base
         /// <returns></returns>
         public double NextDouble(double max, double min)
         {
-            result_double = min + (max - min) * NextDouble();
-            return result_double;
+            result = min + (max - min) * NextDouble();
+            return result;
         }
+
 
 
         /// <summary>
         /// メルセンヌツイスターの周期2^19937-1 回毎に種をリセットする
+        /// </summary>
         void CountUp()
         {
-
             uint back = 0;
-            for (uint j = 0; j < counter_dimension_max; j++)
+            for (uint i = 0; i < counterDimensions; i++)
             {
-                if (!counter_array[counter_dimension_max - 1 - j])
+                if (!counterArray[counterDimensions - 1 - i])
                 {
-                    back = j;
+                    back = i;
                     break;
                 }
             }
 
-            for (int j = 0; j < counter_dimension_max - back; j++)
+            for (int i = 0; i < counterDimensions - back; i++)
             {
-                if (!counter_array[j])
+                if (!counterArray[i])
                 {
-                    counter_array[j] = true;
+                    counterArray[i] = true;
                     return;
                 }
                 else
                 {
-                    counter_array[j] = false;
+                    counterArray[i] = false;
                     continue;
                 }
             }
 
-
-            bool finish = counter_array[0];
-            foreach (bool b in counter_array)
+            if (counterArray[counterDimensions - 1])
             {
-                finish = finish == true && b == true;
-            }
-            if (finish)
-            {
-                counter_array = new bool[counter_dimension_max];
-
-                if (seed == uint.MaxValue) { seed = 0; }
-                else { seed++; }
-                SetSeed(seed);
+                if (counterArray.All(b => b == true))
+                {
+                    if (seed == uint.MaxValue) { seed = 0; }
+                    else { seed++; }
+                    SetSeed(seed);
+                }
             }
         }
 
