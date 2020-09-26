@@ -15,7 +15,7 @@ namespace Tool_dotNetStandard.DataProcessing.IO
         public static void Write_csv_ReWrite(string csvFileName, DataTable data, bool header = true, string separator = ",")
         {
             //パスを作成する。
-            string fullPath = System.IO.Path.Combine(Tool_dotNetStandard.DataProcessing.IO.DirectoryRider.GetCurrentDirectory(), csvFileName + ".csv");
+            string fullPath = CSVUser.MakeFullPath(csvFileName);
 
             List<string> lines = new List<string>();
             if (header)

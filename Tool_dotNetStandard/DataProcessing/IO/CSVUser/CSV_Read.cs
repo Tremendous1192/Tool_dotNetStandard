@@ -24,7 +24,7 @@ namespace Tool_dotNetStandard.DataProcessing.IO
         public static DataTable Read_csv(string csvFileName, bool header = true, char separator = ',')
         {
             //パスを作成する。
-            string fullPath = System.IO.Path.Combine(Tool_dotNetStandard.DataProcessing.IO.DirectoryRider.GetCurrentDirectory(), csvFileName + ".csv");
+            string fullPath = CSVUser.MakeFullPath(csvFileName);
 
             //戻り値
             DataTable data = new DataTable();
