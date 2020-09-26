@@ -22,7 +22,7 @@ namespace Tool_dotNetStandard.DataProcessing.IO
         /// <returns></returns>
         public static void Write_text_Add(string textFileName, string writtenText)
         {
-            string path = System.IO.Path.Combine(Tool_dotNetStandard.DataProcessing.IO.Directory.GetCurrentDirectory(), textFileName + ".txt");
+            string path = TextUser.MakeFullPath(textFileName);
 
             //NugetでSystem.Text.Encoding.CodePagesをダウンロードしておく.
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
@@ -43,7 +43,7 @@ namespace Tool_dotNetStandard.DataProcessing.IO
         /// <returns></returns>
         public static void Write_text_Add(string textFileName, string[] writtenText)
         {
-            string path = System.IO.Path.Combine(Tool_dotNetStandard.DataProcessing.IO.Directory.GetCurrentDirectory(), textFileName + ".txt");
+            string path = TextUser.MakeFullPath(textFileName);
 
             //NugetでSystem.Text.Encoding.CodePagesをダウンロードしておく.
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);

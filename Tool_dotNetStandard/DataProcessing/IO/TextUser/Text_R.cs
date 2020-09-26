@@ -19,7 +19,7 @@ namespace Tool_dotNetStandard.DataProcessing.IO
         /// <returns></returns>
         public static string[] ReadText(string textFileName)
         {
-            string path = System.IO.Path.Combine(Tool_dotNetStandard.DataProcessing.IO.Directory.GetCurrentDirectory(), textFileName + ".txt");
+            string path = TextUser.MakeFullPath(textFileName);
 
             //.Net Coreでtxtを使用するのに必要。
             //NugetでSystem.Text.Encoding.CodePagesをダウンロードしておく.

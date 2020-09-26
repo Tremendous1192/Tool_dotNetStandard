@@ -7,7 +7,7 @@ namespace Tool_dotNetStandard.DataProcessing.IO
     /// <summary>
     /// ディレクトリの移動に使用するクラス。
     /// </summary>
-    public class Directory
+    public class DirectoryRider
     {
 
 
